@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-obsidian: #060709;
+  --color-surface: #0c0e14;
+  --color-card: #121520;
+  --color-border: #1f2438;
+  --color-velvet: #8b5cf6;
+  --color-sensual: #ec4899;
+}
+
+body {
+  background-color: #060709;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
