@@ -1,29 +1,79 @@
-# 🎨 Orochia Design System
+<div align="center">
 
-The official UI component library and design token system for [Orochia](https://github.com/krizaka/orochia) and the Krizaka adult creator ecosystem.
+# 🎨 OROCHIA DESIGN SYSTEM
+### Obsidian Velvet Noir & Cyber-Sensual Luxury — Krizaka UX Craft
 
-## Aesthetic Identity: Obsidian Velvet Noir & Cyber-Sensual Luxury
+[![CI](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-14_App_Router-black?logo=next.js)](https://nextjs.org/)
+[![Showcase Port](https://img.shields.io/badge/Showcase_Port-3002-pink)](http://localhost:3002)
 
-Built with deep obsidian surfaces, glowing velvet accents, refined glassmorphism, and responsive micro-interactions designed to elevate creator platforms and maximize tip conversion rates while adhering strictly to legal compliance standards.
+The official UI component library, design tokens, and aesthetic foundation for [**Orochia**](https://github.com/krizaka/orochia) and [**Orochia Admin**](https://github.com/krizaka/orochia-admin), engineered by **Krizaka**.
 
-## Included Components
+[Consumer App](https://github.com/krizaka/orochia) • [Admin Control Plane](https://github.com/krizaka/orochia-admin) • [Aesthetic Contract](AGENTS.md)
 
-- **`Button`**: High-conversion velvet glow buttons, secondary frosted glass, and emergency purge actions.
-- **`Badge`**: Status indicators for 4K streams, Anycast Edge, and pulsating live status.
-- **`ComplianceBadge`**: 18 U.S.C. § 2257 federal custody certification indicators.
-- **`TokenInput`**: Quick tip chips ($5, $15, $25, $50, $100) with automatic 10% platform rake calculation.
-- **`VideoCard`**: 4K UHD video player preview with paywall pricing, duration tags, and creator KYC badges.
-- **`StatCard`**: Visual metric cards for GMV, platform rake, and Bunny CDN edge cache ratios.
-- **`AgeGateModal`**: Legally binding 18+ adult verification gate with mandatory compliance checkboxes.
+</div>
 
-## Installation & Showcase
+---
+
+## 🖤 Aesthetic Identity & Foundations
+
+The Orochia visual language balances **Obsidian Velvet Noir** depth with **Cyber-Sensual Luxury** accents:
+- **Obsidian Surfaces**: Deep obsidian `#030406` base canvas with layered surfaces (`#0c0e14`, `#121520`) and frosted glass dividers (`rgba(255, 255, 255, 0.08)`).
+- **Sensual Velvet Neons**: High-saturation accents in Velvet Violet (`#8b5cf6`), Sensual Magenta (`#ec4899`), Passion Rose (`#f43f5e`), Sanctuary Amber (`#f59e0b`), and Mint Emerald (`#10b981`).
+- **Tactile Micro-Interactions**: Spring hover states, glow bloom drop-shadows, and smooth micro-animations.
+
+---
+
+## 📦 Component Library
+
+```tsx
+import { 
+  Button, 
+  Badge, 
+  VideoCard, 
+  TokenInput, 
+  ComplianceBadge, 
+  StatCard, 
+  AgeGateModal 
+} from "@krizaka/orochia-design-system";
+
+// 1. Velvet Glow Call-To-Action
+<Button variant="primary" size="lg">Unlock 4K Stream</Button>
+
+// 2. 18 U.S.C. § 2257 Federal Custodian Badge
+<ComplianceBadge status="VERIFIED" />
+
+// 3. Tip Token Stepper with 10% auto-split
+<TokenInput value={25} onChange={(val) => setTip(val)} />
+
+// 4. 4K UHD Video Stream Card with Paywall
+<VideoCard
+  id="vid-101"
+  title="Midnight Atelier Sessions (Episode 1)"
+  creatorName="Elena Vox"
+  creatorHandle="elena"
+  thumbnailUrl="/thumbnails/elena-ep1.jpg"
+  is4K={true}
+  isLocked={true}
+  price={15}
+/>
+```
+
+---
+
+## 🚀 Interactive Showcase & Playground
 
 ```bash
+# Clone repository
+git clone https://github.com/krizaka/orochia-design-system.git
+cd orochia-design-system
+
 # Install dependencies
 npm install
 
-# Run the live interactive documentation & component playground
+# Launch interactive component playground
 npm run dev -- -p 3002
 ```
 
-Browse the showcase at `http://localhost:3002`.
+Browse the live catalog and token inspector at [http://localhost:3002](http://localhost:3002).
