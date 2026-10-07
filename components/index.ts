@@ -5,3 +5,4 @@ export * from "./ComplianceBadge";
 export * from "./TokenInput";
 export * from "./VideoCard";
 export * from "./AgeGateModal";
+export * from "./OrochiaLogo";

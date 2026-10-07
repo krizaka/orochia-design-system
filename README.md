@@ -1,18 +1,23 @@
+<!-- krizaka-header -->
 <div align="center">
 
-# 🎨 OROCHIA DESIGN SYSTEM
-### Obsidian Velvet Noir & Cyber-Sensual Luxury — Krizaka UX Craft
+<img src=".github/assets/orochia-logo.svg" alt="Orochia" width="132">
+
+# Orochia Design System
+
+**Creators get paid. Every cent, exactly once.**
+
+Tokens and React components shared by the Orochia applications (dark-first, WCAG AA), including the animated Orochia mark.
 
 [![CI](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Next.js](https://img.shields.io/badge/Next.js-14_App_Router-black?logo=next.js)](https://nextjs.org/)
-[![Showcase Port](https://img.shields.io/badge/Showcase_Port-3002-pink)](http://localhost:3002)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Orochia](https://img.shields.io/badge/part%20of-Orochia-d946ef)](https://www.krizaka.com/en/products/orochia#guarantees)
+[![Docs](https://img.shields.io/badge/docs-krizaka.com-6366f1)](https://www.krizaka.com/en/products/orochia)
 
-The official UI component library, design tokens, and aesthetic foundation for [**Orochia**](https://github.com/krizaka/orochia) and [**Orochia Admin**](https://github.com/krizaka/orochia-admin), engineered by **Krizaka**.
-
-[Consumer App](https://github.com/krizaka/orochia) • [Admin Control Plane](https://github.com/krizaka/orochia-admin) • [Aesthetic Contract](AGENTS.md)
+[Documentation](https://www.krizaka.com/en/products/orochia) · [Website](https://www.krizaka.com) · [Krizaka on GitHub](https://github.com/krizaka)
 
 </div>
+<!-- /krizaka-header -->
 
 ---
 
