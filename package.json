@@ -7,31 +7,31 @@
     "build": "next build",
     "build:lib": "tsup",
     "start": "next start -p 3002",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "prepublishOnly": "npm run build:lib"
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "lucide-react": "^0.428.0",
+    "lucide-react": "^1.52.0",
     "tailwind-merge": "^2.5.2"
   },
   "devDependencies": {
-    "@types/node": "^20.14.10",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
     "autoprefixer": "^10.4.20",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.35",
-    "postcss": "^8.4.41",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "^16.4.0",
+    "postcss": "^8.5.23",
     "tailwindcss": "^3.4.10",
     "tsup": "^8.5.1",
     "typescript": "^5.5.4",
-    "vitest": "^2.1.9",
-    "next": "^14.2.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "vitest": "^4.1.11",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "license": "Apache-2.0",
   "repository": {
@@ -71,5 +71,9 @@
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
+  },
+  "overrides": {
+    "postcss-selector-parser": "^7.1.6",
+    "esbuild": "^0.28.2"
   }
 }
