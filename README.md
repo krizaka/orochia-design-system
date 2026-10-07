@@ -19,7 +19,50 @@ Tokens and React components shared by the Orochia applications (dark-first, WCAG
 </div>
 <!-- /krizaka-header -->
 
+## Install
+
+```bash
+npm install @krizaka/orochia-design-system --registry=https://npm.pkg.github.com
+```
+
+```js
+// tailwind.config.js
+module.exports = {
+  presets: [require("@krizaka/orochia-design-system/tailwind-preset")],
+  content: ["./app/**/*.{ts,tsx}", "./node_modules/@krizaka/orochia-design-system/dist/**/*.js"],
+};
+```
+
+```tsx
+import { OrochiaLogo, Button, Field, Input, Tabs, Modal } from "@krizaka/orochia-design-system";
+import { colors } from "@krizaka/orochia-design-system/tokens";
+```
+
+## Components
+
+| Component | Purpose |
+| :--- | :--- |
+| `OrochiaLogo` | The animated mark (serpent + flame); crops to the serpent below 48 px; `animated={false}` for stills |
+| `Button` | primary · secondary · outline · danger · ghost, with a loading state |
+| `Badge`, `ComplianceBadge` | status pills, 18 U.S.C. § 2257 states |
+| `Field` + `Input` · `Select` · `Textarea` | labelled controls with hint / error wired for assistive technology |
+| `Tabs` | WAI-ARIA tablist, arrow-key navigation |
+| `Modal` | labelled dialog; Escape and backdrop close it; focus returns |
+| `EmptyState`, `Avatar`, `StatCard`, `TokenInput`, `VideoCard`, `AgeGateModal` | the rest of the app vocabulary |
+
+## Develop
+
+```bash
+npm install
+npm run dev          # showcase on http://localhost:3002
+npm test             # render tests
+npm run build:lib    # the published package (dist/)
+```
+
+Rules for this repository: [AGENTS.md](AGENTS.md).
+
 ---
+
 
 ## 🖤 Aesthetic Identity & Foundations
 

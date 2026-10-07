@@ -25,6 +25,7 @@ import {
   AgeGateModal
 } from "../components";
 import { colors, gradients, shadows } from "../tokens";
+import { FoundationsShowcase } from "./FoundationsShowcase";
 
 export default function DesignSystemShowcase() {
   const [copiedSection, setCopiedSection] = useState<string | null>(null);
@@ -410,6 +411,8 @@ export default function DesignSystemShowcase() {
             />
           </div>
         </section>
+
+        <FoundationsShowcase />
       </main>
 
       {/* Age Gate Modal Test */}

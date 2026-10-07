@@ -1,34 +1,60 @@
+# Lint, type-check, test, build the showcase and the library on every change; on a v* tag, publish
+# @krizaka/orochia-design-system to GitHub Packages.
 name: Continuous Integration
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
+    tags: ["v*"]
   pull_request:
-    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-lint:
-    name: Build & Validate
+  build:
+    name: Lint, test, build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run build & typecheck
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Showcase build
         run: npm run build
+      - name: Library build
+        run: npm run build:lib
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
 
-      - name: Lint
-        run: npm run lint
+  publish:
+    name: Publish to GitHub Packages
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+          scope: "@krizaka"
+      - run: npm ci
+      - name: Version from the tag
+        run: npm version --no-git-tag-version "${GITHUB_REF_NAME#v}"
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

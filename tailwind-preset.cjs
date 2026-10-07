@@ -1,11 +1,10 @@
+/**
+ * Tailwind preset of the Orochia design system. In a consuming app:
+ *   presets: [require("@krizaka/orochia-design-system/tailwind-preset")],
+ *   content: [..., "./node_modules/@krizaka/orochia-design-system/dist/**\/*.js"],
+ */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./tokens/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
   theme: {
     extend: {
       colors: {
@@ -27,7 +26,10 @@ module.exports = {
         display: ["Outfit", "Inter", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
       },
+      boxShadow: {
+        "glow-primary": "0 0 25px -5px rgba(139, 92, 246, 0.4)",
+        "glow-accent": "0 0 25px -5px rgba(236, 72, 153, 0.4)",
+      },
     },
   },
-  plugins: [],
 };

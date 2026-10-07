@@ -1,47 +1,47 @@
-# 🎨 OROCHIA DESIGN SYSTEM — UX Craft & Governance
+# Orochia Design System — Repository Contract (agent-neutral)
 
-> Design contract and component library governance for **`orochia-design-system`**, the official Obsidian Velvet Noir & Cyber-Sensual Luxury design system of the Orochia and Krizaka creator ecosystem.
+> Scope of [`krizaka/orochia-design-system`](https://github.com/krizaka/orochia-design-system), published as
+> **`@krizaka/orochia-design-system`** on GitHub Packages. Platform rules live in the
+> [Orochia contract](https://github.com/krizaka/orochia/blob/main/AGENTS.md). `CLAUDE.md` only imports this file.
 
----
+## 1. What this repository is
 
-## 1. Aesthetic Identity & Krizaka Craft
+- **Tokens** (`tokens/index.ts`) and **React components** (`components/`) shared by the Orochia applications,
+  plus a **Tailwind preset** (`tailwind-preset.cjs`) carrying the palette, fonts and glows.
+- A **showcase** (`app/`, Next.js, port 3002) that renders every component in its states.
+- Components: `OrochiaLogo` (animated mark), `Button`, `Badge`, `StatCard`, `ComplianceBadge`, `TokenInput`,
+  `VideoCard`, `AgeGateModal`, `Field` + `Input` / `Select` / `Textarea`, `Tabs`, `Modal`, `EmptyState`, `Avatar`.
 
-- **Theme Identity**: *Obsidian Velvet Noir & Cyber-Sensual Luxury*.
-- **Foundations**:
-  - Obsidian surfaces (`#030406` deep canvas, `#060709` base, `#0c0e14` elevated surface, `#121520` cards).
-  - Velvet & sensual neons (`#8b5cf6` velvet primary, `#ec4899` sensual magenta, `#f43f5e` DMCA/passion rose, `#f59e0b` sanctuary amber, `#10b981` mint emerald).
-  - Micro-interactions, spring transitions, soft neon drop shadows (`shadow-violet-600/30`), subtle glassmorphism borders (`rgba(255, 255, 255, 0.08)`).
-- **Core Package**: `@krizaka/orochia-design-system`
+## 2. Aesthetic — Obsidian Velvet Noir
 
----
+- Dark-first surfaces (`#060709` → `#121520`), velvet violet → fuchsia → pink accents, glass borders
+  (`rgba(255,255,255,.08)`), Outfit for display, Inter / Plus Jakarta Sans for text, JetBrains Mono for figures.
+- WCAG AA contrast; visible focus rings; every motion (logo orbit, scales, pulses, spinners) stops under
+  `prefers-reduced-motion`.
 
-## 2. Directory Structure
+## 3. Rules
 
-```
-products/orochia-design-system/
-├── tokens/
-│   └── index.ts          # Color scales, gradients, shadows, radii, typography
-├── components/
-│   ├── Button.tsx        # High-conversion interactive CTA with loading & neon glow
-│   ├── Badge.tsx         # Semantic pill tags with pulsing dot status indicators
-│   ├── StatCard.tsx      # Executive metric card with gradient badge & trend indicators
-│   ├── ComplianceBadge.tsx # 18 U.S.C. § 2257 federal audit indicators
-│   ├── TokenInput.tsx    # Tip amount input with 1-click preset chips & rake splits
-│   ├── VideoCard.tsx     # 4K UHD stream card with duration, creator KYC & paywalls
-│   ├── AgeGateModal.tsx  # 18+ adult consent verification gate
-│   └── index.ts          # Consolidated component export
-├── app/                  # Interactive documentation & live playground (Port 3002)
-└── package.json
-```
+- **No app dependency**: components receive data through props; no fetching, no routing, no business rules.
+- **Accessible by construction**: `Field` wires label / hint / error (`aria-describedby`, `aria-invalid`), `Tabs`
+  follow the WAI-ARIA tablist pattern (arrow keys), `Modal` is a labelled dialog that moves focus in and back.
+- The `OrochiaLogo` here is the reference: the copies in the apps must stay identical.
+- New shared UI is built here first, with a showcase entry and a test, then adopted by the apps.
 
----
-
-## 3. Local Development
+## 4. Build & publish
 
 ```bash
-# Install dependencies
 npm install
-
-# Run the interactive showcase on port 3002
-npm run dev -- -p 3002
+npm run dev          # showcase on :3002
+npm test             # render tests (Vitest)
+npm run build:lib    # dist/: ESM + CJS + types, every module marked "use client"
 ```
+
+A consuming app installs `@krizaka/orochia-design-system` from GitHub Packages and adds
+`presets: [require("@krizaka/orochia-design-system/tailwind-preset")]` plus
+`./node_modules/@krizaka/orochia-design-system/dist/**/*.js` to its Tailwind `content`.
+Publishing happens in CI on a `v*` tag (`npm version` from the tag, `npm publish`).
+
+## 5. Definition of done
+
+`npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `npm run build:lib` pass; the showcase shows
+the new or changed component in its states.
