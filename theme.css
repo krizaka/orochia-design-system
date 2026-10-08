@@ -1,0 +1,43 @@
+/* @krizaka/orochia-design-system — Tailwind CSS v4 theme.
+   In the app:  @import "tailwindcss";  @import "@krizaka/orochia-design-system/theme.css";
+   It brings the Krizaka motion signature, the Orochia variants and tokens, and tells Tailwind to scan the
+   components shipped in this package. */
+@import "@krizaka/ui/motion.css";
+
+@source "./dist";
+
+/* `dark:` follows the `dark` class on <html>. `light:` applies in the light theme (`light` class) — except inside a
+   `.theme-dark` island (media editors, players), which stays dark in both themes; :where() keeps specificity. */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light {
+  html.light &:where(:not(.theme-dark, .theme-dark *)) {
+    @slot;
+  }
+  .light &:where(:not(.theme-dark, .theme-dark *)) {
+    @slot;
+  }
+  :root:not(.dark) &:where(:not(.theme-dark, .theme-dark *)) {
+    @slot;
+  }
+}
+
+@theme {
+  /* Obsidian Velvet Noir */
+  --color-obsidian: #060709;
+  --color-obsidian-surface: #0c0e14;
+  --color-obsidian-card: #121520;
+  --color-obsidian-border: #1f2438;
+  --color-velvet: #8b5cf6;
+  --color-sensual: #ec4899;
+  --color-flame: #f43f5e;
+
+  --shadow-glow-primary: 0 0 25px -5px rgb(139 92 246 / 0.4);
+  --shadow-glow-accent: 0 0 25px -5px rgb(236 72 153 / 0.4);
+}
+
+@theme inline {
+  /* Every transition uses the Krizaka easing (from @krizaka/ui/motion.css) with a calm default duration. */
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: var(--kz-ease);
+  --ease-kz: var(--kz-ease);
+}

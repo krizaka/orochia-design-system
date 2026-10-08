@@ -1,7 +1,49 @@
 {
   "name": "@krizaka/orochia-design-system",
-  "version": "1.0.0",
-  "description": "Tokens and React components shared by the Orochia applications \u2014 dark-first, accessible, with the animated Orochia mark.",
+  "version": "2.0.0",
+  "description": "The components of the Orochia applications on Tailwind CSS v4 \u2014 buttons, sheets, switches, sliders, chips, two-tap confirmations, social glyphs \u2014 with the Orochia theme and the Krizaka marks and motion from @krizaka/ui.",
+  "keywords": [
+    "orochia",
+    "krizaka",
+    "design-system",
+    "react",
+    "tailwindcss",
+    "tailwind-v4",
+    "components",
+    "accessibility"
+  ],
+  "homepage": "https://github.com/krizaka/orochia-design-system#readme",
+  "bugs": "https://github.com/krizaka/orochia-design-system/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krizaka/orochia-design-system.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Krizaka (https://www.krizaka.com)",
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js"
+    },
+    "./theme.css": "./theme.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "theme.css",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build",
@@ -10,70 +52,43 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "prepublishOnly": "npm run build:lib"
+    "check": "npm run lint && npm run typecheck && npm test && npm run build:lib && npm run build",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build:lib"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "lucide-react": "^1.52.0",
-    "tailwind-merge": "^2.5.2"
-  },
-  "devDependencies": {
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
-    "autoprefixer": "^10.4.20",
-    "eslint": "^9.39.0",
-    "eslint-config-next": "^16.4.0",
-    "postcss": "^8.5.23",
-    "tailwindcss": "^3.4.10",
-    "tsup": "^8.5.1",
-    "typescript": "^5.5.4",
-    "vitest": "^4.1.11",
-    "next": "^16.4.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
-  },
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/krizaka/orochia-design-system.git"
-  },
-  "homepage": "https://www.krizaka.com/en/products/orochia",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./tokens": {
-      "types": "./dist/tokens.d.ts",
-      "import": "./dist/tokens.js",
-      "require": "./dist/tokens.cjs"
-    },
-    "./tailwind-preset": "./tailwind-preset.cjs",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "dist",
-    "tailwind-preset.cjs",
-    "README.md",
-    "LICENSE"
-  ],
-  "sideEffects": false,
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
+    "@krizaka/ui": "^1.0.0",
+    "lucide-react": "^1.17.0"
   },
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
   },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.0",
+    "eslint-config-next": "^16.4.0",
+    "happy-dom": "^20.0.0",
+    "next": "^16.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwindcss": "^4.1.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.5.4",
+    "vitest": "^4.1.11"
+  },
   "overrides": {
     "postcss-selector-parser": "^7.1.6",
     "esbuild": "^0.28.2"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

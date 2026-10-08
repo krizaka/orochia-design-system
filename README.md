@@ -7,8 +7,9 @@
 
 **Creators get paid. Every cent, exactly once.**
 
-Tokens and React components shared by the Orochia applications (dark-first, WCAG AA), including the animated Orochia mark.
+The components of the Orochia applications — on Tailwind CSS v4, readable in both themes, accessible by default — with the Krizaka marks and motion from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui).
 
+[![npm](https://img.shields.io/npm/v/@krizaka/orochia-design-system?color=d946ef&label=npm)](https://www.npmjs.com/package/@krizaka/orochia-design-system)
 [![CI](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Orochia](https://img.shields.io/badge/part%20of-Orochia-d946ef)](https://www.krizaka.com/en/products/orochia#guarantees)
@@ -22,106 +23,53 @@ Tokens and React components shared by the Orochia applications (dark-first, WCAG
 ## Install
 
 ```bash
-npm install @krizaka/orochia-design-system --registry=https://npm.pkg.github.com
+npm install @krizaka/orochia-design-system
 ```
 
-```js
-// tailwind.config.js
-module.exports = {
-  presets: [require("@krizaka/orochia-design-system/tailwind-preset")],
-  content: ["./app/**/*.{ts,tsx}", "./node_modules/@krizaka/orochia-design-system/dist/**/*.js"],
-};
+React 18 or 19, Tailwind CSS v4. In the app's stylesheet:
+
+```css
+@import "tailwindcss";
+@import "@krizaka/orochia-design-system/theme.css";
 ```
 
-```tsx
-import { OrochiaLogo, Button, Field, Input, Tabs, Modal } from "@krizaka/orochia-design-system";
-import { colors } from "@krizaka/orochia-design-system/tokens";
-```
+`theme.css` brings the Krizaka motion signature (`@krizaka/ui/motion.css`), the `dark:` / `light:` variants (a
+`.theme-dark` container stays dark in both themes — players, editors), the Orochia tokens, and tells Tailwind to scan
+the components shipped in the package. Every transition gets the Krizaka easing.
 
 ## Components
 
-| Component | Purpose |
-| :--- | :--- |
-| `OrochiaLogo` | The animated mark (serpent + flame); crops to the serpent below 48 px; `animated={false}` for stills |
-| `Button` | primary · secondary · outline · danger · ghost, with a loading state |
-| `Badge`, `ComplianceBadge` | status pills, 18 U.S.C. § 2257 states |
-| `Field` + `Input` · `Select` · `Textarea` | labelled controls with hint / error wired for assistive technology |
-| `Tabs` | WAI-ARIA tablist, arrow-key navigation |
-| `Modal` | labelled dialog; Escape and backdrop close it; focus returns |
-| `EmptyState`, `Avatar`, `StatCard`, `TokenInput`, `VideoCard`, `AgeGateModal` | the rest of the app vocabulary |
-
-## Develop
-
-```bash
-npm install
-npm run dev          # showcase on http://localhost:3002
-npm test             # render tests
-npm run build:lib    # the published package (dist/)
-```
-
-Rules for this repository: [AGENTS.md](AGENTS.md).
-
----
-
-
-## 🖤 Aesthetic Identity & Foundations
-
-The Orochia visual language balances **Obsidian Velvet Noir** depth with **Cyber-Sensual Luxury** accents:
-- **Obsidian Surfaces**: Deep obsidian `#030406` base canvas with layered surfaces (`#0c0e14`, `#121520`) and frosted glass dividers (`rgba(255, 255, 255, 0.08)`).
-- **Sensual Velvet Neons**: High-saturation accents in Velvet Violet (`#8b5cf6`), Sensual Magenta (`#ec4899`), Passion Rose (`#f43f5e`), Sanctuary Amber (`#f59e0b`), and Mint Emerald (`#10b981`).
-- **Tactile Micro-Interactions**: Spring hover states, glow bloom drop-shadows, and smooth micro-animations.
-
----
-
-## 📦 Component Library
-
 ```tsx
-import { 
-  Button, 
-  Badge, 
-  VideoCard, 
-  TokenInput, 
-  ComplianceBadge, 
-  StatCard, 
-  AgeGateModal 
-} from "@krizaka/orochia-design-system";
-
-// 1. Velvet Glow Call-To-Action
-<Button variant="primary" size="lg">Unlock 4K Stream</Button>
-
-// 2. 18 U.S.C. § 2257 Federal Custodian Badge
-<ComplianceBadge status="VERIFIED" />
-
-// 3. Tip Token Stepper with 10% auto-split
-<TokenInput value={25} onChange={(val) => setTip(val)} />
-
-// 4. 4K UHD Video Stream Card with Paywall
-<VideoCard
-  id="vid-101"
-  title="Midnight Atelier Sessions (Episode 1)"
-  creatorName="Elena Vox"
-  creatorHandle="elena"
-  thumbnailUrl="/thumbnails/elena-ep1.jpg"
-  is4K={true}
-  isLocked={true}
-  price={15}
-/>
+import { Button, IconButton, ConfirmIconButton, Sheet, Switch, Slider, Chip, Segmented, SocialIcon, buttonClass, cx } from "@krizaka/orochia-design-system";
+import { OrochiaLogo, MotionObserver, RotatingWord } from "@krizaka/orochia-design-system"; // from @krizaka/ui
 ```
+
+| Component | What it is |
+| :--- | :--- |
+| `Button`, `buttonClass` | The one button: primary · secondary · ghost · danger, sm · md · lg, loading. `buttonClass` styles links (works in server components) |
+| `IconButton` | Icon-only, accessible name required (`label`) |
+| `ConfirmIconButton` | A destructive action confirmed by a second tap — never `window.confirm` |
+| `Sheet` | Every dialog: a bottom sheet on phones, centred above; Escape, backdrop, focus in and back. Pass `closeLabel` translated |
+| `Switch`, `Slider`, `Chip`, `Segmented` | Settings and choices, with their ARIA roles |
+| `SocialIcon` | Line glyphs for the networks a profile links |
+| `OrochiaLogo`, `KrizakaLogo` | The animated marks, re-exported from `@krizaka/ui` |
+
+Components take their words as props: the apps translate them (`t("…")`) and pass them in.
+
+## Showcase
+
+```bash
+npm install
+npm run dev        # every component in its states, both themes — http://localhost:3002
+npm run check      # lint, type-check, tests, library build, showcase build
+```
+
+## Release
+
+A `v*` tag publishes to npm from CI with provenance. Semantic versioning; the apps
+([orochia](https://github.com/krizaka/orochia), [orochia-admin](https://github.com/krizaka/orochia-admin)) depend on
+a caret range and never keep a copy of a component.
 
 ---
 
-## 🚀 Interactive Showcase & Playground
-
-```bash
-# Clone repository
-git clone https://github.com/krizaka/orochia-design-system.git
-cd orochia-design-system
-
-# Install dependencies
-npm install
-
-# Launch interactive component playground
-npm run dev -- -p 3002
-```
-
-Browse the live catalog and token inspector at [http://localhost:3002](http://localhost:3002).
+Apache-2.0 · Part of [Krizaka](https://www.krizaka.com) — open source, closed to compromise.

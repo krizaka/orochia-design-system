@@ -1,6 +1,20 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": { "incremental": false, "noEmit": false, "jsx": "react-jsx", "plugins": [] },
-  "include": ["index.ts", "components/**/*.ts", "components/**/*.tsx", "tokens/**/*.ts"],
-  "exclude": ["node_modules", "**/*.test.tsx"]
+  "compilerOptions": {
+    "incremental": false,
+    "noEmit": false,
+    "jsx": "react-jsx",
+    "plugins": [],
+    "types": []
+  },
+  "include": [
+    "index.ts",
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "tokens/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.tsx"
+  ]
 }

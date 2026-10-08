@@ -1,47 +1,46 @@
 # Orochia Design System — Repository Contract (agent-neutral)
 
-> Scope of [`krizaka/orochia-design-system`](https://github.com/krizaka/orochia-design-system), published as
-> **`@krizaka/orochia-design-system`** on GitHub Packages. Platform rules live in the
+> Scope of [`krizaka/orochia-design-system`](https://github.com/krizaka/orochia-design-system), published on npm as
+> **`@krizaka/orochia-design-system`**. Platform rules live in the
 > [Orochia contract](https://github.com/krizaka/orochia/blob/main/AGENTS.md). `CLAUDE.md` only imports this file.
 
 ## 1. What this repository is
 
-- **Tokens** (`tokens/index.ts`) and **React components** (`components/`) shared by the Orochia applications,
-  plus a **Tailwind preset** (`tailwind-preset.cjs`) carrying the palette, fonts and glows.
-- A **showcase** (`app/`, Next.js, port 3002) that renders every component in its states.
-- Components: `OrochiaLogo` (animated mark), `Button`, `Badge`, `StatCard`, `ComplianceBadge`, `TokenInput`,
-  `VideoCard`, `AgeGateModal`, `Field` + `Input` / `Select` / `Textarea`, `Tabs`, `Modal`, `EmptyState`, `Avatar`.
+- The **components of the Orochia applications** (`components/`): `Button` / `buttonClass`, `IconButton`,
+  `ConfirmIconButton`, `Sheet`, `Switch`, `Slider`, `Chip`, `Segmented`, `SocialIcon`, `cx` — the kit the web app and
+  the admin console import from npm. **Tokens** (`tokens/index.ts`) and the **Tailwind CSS v4 theme** (`theme.css`:
+  variants, tokens, `@source` of the package).
+- The **brand marks and the motion signature come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui)**
+  (re-exported, never copied).
+- A **showcase** (`app/`, Next.js, port 3002) that renders every component in its states, in both themes.
 
 ## 2. Aesthetic — Obsidian Velvet Noir
 
-- Dark-first surfaces (`#060709` → `#121520`), velvet violet → fuchsia → pink accents, glass borders
-  (`rgba(255,255,255,.08)`), Outfit for display, Inter / Plus Jakarta Sans for text, JetBrains Mono for figures.
-- WCAG AA contrast; visible focus rings; every motion (logo orbit, scales, pulses, spinners) stops under
-  `prefers-reduced-motion`.
+- Dark-first surfaces, velvet violet → fuchsia → pink accents, glass borders; the light theme is first-class
+  (every surface and text colour has its `light:` counterpart).
+- WCAG AA contrast; visible focus rings; every motion stops under `prefers-reduced-motion`.
 
 ## 3. Rules
 
-- **No app dependency**: components receive data through props; no fetching, no routing, no business rules.
-- **Accessible by construction**: `Field` wires label / hint / error (`aria-describedby`, `aria-invalid`), `Tabs`
-  follow the WAI-ARIA tablist pattern (arrow keys), `Modal` is a labelled dialog that moves focus in and back.
-- The `OrochiaLogo` here is the reference: the copies in the apps must stay identical.
-- New shared UI is built here first, with a showcase entry and a test, then adopted by the apps.
+- **No app dependency**: components receive data **and words** through props (labels are translated by the apps);
+  no fetching, no routing, no business rules, no i18n library.
+- **Accessible by construction**: ARIA roles (switch, radiogroup, dialog), accessible names required on icon-only
+  buttons, Escape / backdrop / focus return on `Sheet`.
+- Destructive actions confirm with a second tap (`ConfirmIconButton`), never `window.confirm`.
+- New shared UI is built here first, with a showcase entry and a test, then released and adopted by the apps.
 
-## 4. Build & publish
+## 4. Build & release
 
 ```bash
 npm install
 npm run dev          # showcase on :3002
-npm test             # render tests (Vitest)
-npm run build:lib    # dist/: ESM + CJS + types, every module marked "use client"
+npm run check        # lint, type-check, tests, library build, showcase build
 ```
 
-A consuming app installs `@krizaka/orochia-design-system` from GitHub Packages and adds
-`presets: [require("@krizaka/orochia-design-system/tailwind-preset")]` plus
-`./node_modules/@krizaka/orochia-design-system/dist/**/*.js` to its Tailwind `content`.
-Publishing happens in CI on a `v*` tag (`npm version` from the tag, `npm publish`).
+A consuming app installs `@krizaka/orochia-design-system` from npm and adds
+`@import "@krizaka/orochia-design-system/theme.css";` after `@import "tailwindcss";`.
+A `v*` tag publishes to npm from CI with provenance.
 
 ## 5. Definition of done
 
-`npm run lint`, `npm run typecheck`, `npm test`, `npm run build` and `npm run build:lib` pass; the showcase shows
-the new or changed component in its states.
+`npm run check` passes; the showcase shows the new or changed component in its states, in both themes.

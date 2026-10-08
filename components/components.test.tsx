@@ -1,53 +1,66 @@
-import { describe, expect, it } from "vitest";
-import { renderToStaticMarkup } from "react-dom/server";
-import { Avatar, Badge, Button, EmptyState, Field, Input, Modal, OrochiaLogo, Tabs } from "./index";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { Button, Chip, ConfirmIconButton, IconButton, Segmented, Sheet, Switch, buttonClass } from "./index";
 
-const html = (node: React.ReactElement) => renderToStaticMarkup(node);
-
-describe("components", () => {
-  it("a loading button is disabled and shows its spinner", () => {
-    const out = html(<Button isLoading>Pay</Button>);
-    expect(out).toContain("disabled");
-    expect(out).toContain("animate-spin");
+describe("Button", () => {
+  it("is busy and disabled while loading", () => {
+    render(<Button loading>Save</Button>);
+    const button = screen.getByRole("button", { name: "Save" });
+    expect(button).toHaveProperty("disabled", true);
+    expect(button.getAttribute("aria-busy")).toBe("true");
   });
 
-  it("badges carry their status dot", () => {
-    expect(html(<Badge dot variant="emerald">Live</Badge>)).toContain("bg-emerald-400");
+  it("styles links through buttonClass", () => {
+    expect(buttonClass({ variant: "primary" })).toContain("bg-");
   });
 
-  it("a field wires label, control and error for assistive technology", () => {
-    const out = html(<Field label="E-mail" error="Required">{(p) => <Input {...p} />}</Field>);
-    const id = /for="([^"]+)"/.exec(out)?.[1];
-    expect(id).toBeTruthy();
-    expect(out).toContain(`id="${id}"`);
-    expect(out).toContain('aria-invalid="true"');
-    expect(out).toContain(`aria-describedby="${id}-error"`);
+  it("names an icon-only button", () => {
+    render(<IconButton label="Add">+</IconButton>);
+    expect(screen.getByRole("button", { name: "Add" })).toBeTruthy();
+  });
+});
+
+describe("ConfirmIconButton", () => {
+  it("needs a second tap", () => {
+    const onConfirm = vi.fn();
+    render(<ConfirmIconButton label="Delete" confirmLabel="Delete?" onConfirm={onConfirm}>×</ConfirmIconButton>);
+    fireEvent.click(screen.getByRole("button", { name: "Delete" }));
+    expect(onConfirm).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Delete?" }));
+    expect(onConfirm).toHaveBeenCalledOnce();
+  });
+});
+
+describe("choices", () => {
+  it("announces a pressed chip", () => {
+    render(<Chip active>1×</Chip>);
+    expect(screen.getByRole("button").getAttribute("aria-pressed")).toBe("true");
   });
 
-  it("tabs expose one selected, focusable tab bound to its panel", () => {
-    const out = html(<Tabs idPrefix="t" value="b" onChange={() => {}} items={[{ id: "a", label: "A" }, { id: "b", label: "B", count: 3 }]} />);
-    expect(out).toContain('role="tablist"');
-    expect(out.match(/aria-selected="true"/g)).toHaveLength(1);
-    expect(out).toContain('aria-controls="t-panel-b"');
+  it("exposes a switch", () => {
+    const onChange = vi.fn();
+    render(<Switch checked={false} onChange={onChange} label="Notifications" />);
+    fireEvent.click(screen.getByRole("switch", { name: "Notifications" }));
+    expect(onChange).toHaveBeenCalledWith(true);
   });
 
-  it("a closed modal renders nothing, an open one is a labelled dialog", () => {
-    expect(html(<Modal open={false} onClose={() => {}} title="x">body</Modal>)).toBe("");
-    const out = html(<Modal open onClose={() => {}} title="Edit">body</Modal>);
-    expect(out).toContain('role="dialog"');
-    expect(out).toContain('aria-modal="true"');
+  it("is a radio group", () => {
+    render(<Segmented label="Quality" value="a" onChange={() => undefined} options={[{ value: "a", label: "A" }, { value: "b", label: "B" }]} />);
+    expect(screen.getByRole("radiogroup", { name: "Quality" })).toBeTruthy();
+  });
+});
+
+describe("Sheet", () => {
+  it("is a labelled modal dialog that closes on Escape", () => {
+    const onClose = vi.fn();
+    render(<Sheet open onClose={onClose} title="Edit video" closeLabel="Fermer">body</Sheet>);
+    expect(screen.getByRole("dialog", { name: "Edit video" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Fermer" })).toBeTruthy();
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(onClose).toHaveBeenCalled();
   });
 
-  it("an avatar without picture shows initials", () => {
-    expect(html(<Avatar name="Elena Vox" />)).toContain(">EV<");
-  });
-
-  it("the empty state names what is missing", () => {
-    expect(html(<EmptyState title="No video yet">Upload one.</EmptyState>)).toContain("No video yet");
-  });
-
-  it("the Orochia mark animates unless told not to", () => {
-    expect(html(<OrochiaLogo size={64} />)).toContain("oro-slither");
-    expect(html(<OrochiaLogo size={64} animated={false} />)).not.toContain('class="oro-slither"');
+  it("renders nothing when closed", () => {
+    render(<Sheet open={false} onClose={() => undefined} title="x">body</Sheet>);
+    expect(screen.queryByRole("dialog")).toBeNull();
   });
 });

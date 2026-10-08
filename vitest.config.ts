@@ -1,6 +1,3 @@
 import { defineConfig } from "vitest/config";
 
-export default defineConfig({
-  oxc: { jsx: { runtime: "automatic" } },
-  test: { include: ["components/**/*.test.tsx"], environment: "node" },
-});
+export default defineConfig({ test: { environment: "happy-dom", globals: true } });

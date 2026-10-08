@@ -1,53 +1,43 @@
 "use client";
 
-import React, { ButtonHTMLAttributes, forwardRef } from "react";
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import React from "react";
+import { Loader2 } from "lucide-react";
+import { cx } from "./cx";
+import { buttonClass, type ButtonSize, type ButtonVariant } from "./button-class";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "danger" | "ghost";
-  size?: "sm" | "md" | "lg";
-  isLoading?: boolean;
+/** The one button of the app (loading state included); its classes come from buttonClass. */
+export function Button({
+  variant,
+  size,
+  round,
+  loading = false,
+  icon,
+  className,
+  children,
+  ...rest
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; size?: ButtonSize; round?: boolean; loading?: boolean; icon?: React.ReactNode }) {
+  return (
+    <button type="button" {...rest} disabled={rest.disabled || loading} aria-busy={loading || undefined} className={buttonClass({ variant, size, round, className })}>
+      {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : icon}
+      {children}
+    </button>
+  );
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", isLoading = false, children, disabled, ...props }, ref) => {
-    const baseStyles =
-      "inline-flex items-center justify-center font-semibold rounded-2xl transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none select-none";
-
-    const sizeStyles = {
-      sm: "px-3 py-1.5 text-xs gap-1.5",
-      md: "px-4 py-2.5 text-xs gap-2",
-      lg: "px-6 py-3.5 text-sm gap-2.5",
-    };
-
-    const variantStyles = {
-      primary:
-        "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 text-white shadow-lg shadow-violet-600/30 hover:brightness-110 hover:shadow-violet-600/50",
-      secondary:
-        "bg-white/10 hover:bg-white/15 text-white border border-white/10 backdrop-blur-md",
-      outline:
-        "border border-violet-500/30 text-violet-300 hover:bg-violet-500/10 hover:border-violet-500/60",
-      danger:
-        "bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30",
-      ghost:
-        "text-zinc-400 hover:text-white hover:bg-white/5",
-    };
-
-    return (
-      <button
-        ref={ref}
-        disabled={disabled || isLoading}
-        className={twMerge(clsx(baseStyles, sizeStyles[size], variantStyles[variant], className))}
-        {...props}
-      >
-        {isLoading && (
-          <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/20 border-t-white" />
-        )}
-        {children}
-      </button>
-    );
-  }
-);
-
-Button.displayName = "Button";
+/** A square icon-only button; `label` is its accessible name (and tooltip). */
+export function IconButton({ label, className, children, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement> & { label: string }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      {...rest}
+      className={cx(
+        "inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-zinc-300 transition-colors hover:bg-white/8 hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-violet-400 disabled:opacity-40 light:text-slate-600 hover:light:bg-black/6 hover:light:text-slate-950",
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}

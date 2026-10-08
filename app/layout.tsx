@@ -1,19 +1,17 @@
 import React from "react";
 import "./globals.css";
+import { MotionMount } from "./MotionMount";
 
 export const metadata = {
-  title: "Orochia Design System — Obsidian Velvet Noir & Cyber-Sensual Luxury",
-  description: "Official UI Component Library and Design Tokens for Orochia and Krizaka Creator Ecosystem",
+  title: "Orochia Design System",
+  description: "The components of the Orochia applications, in their states, in both themes.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body className="min-h-screen bg-[#060709] text-white selection:bg-violet-600 selection:text-white">
+      <body className="min-h-screen">
+        <MotionMount />
         {children}
       </body>
     </html>
