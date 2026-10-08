@@ -1,6 +1,6 @@
 {
   "name": "@krizaka/orochia-design-system",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "The components of the Orochia applications on Tailwind CSS v4 \u2014 buttons, sheets, switches, sliders, chips, two-tap confirmations, social glyphs \u2014 with the Orochia theme and the Krizaka marks and motion from @krizaka/ui.",
   "keywords": [
     "orochia",
@@ -27,6 +27,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./classes": {
+      "types": "./dist/classes.d.ts",
+      "import": "./dist/classes.js"
     },
     "./tokens": {
       "types": "./dist/tokens.d.ts",

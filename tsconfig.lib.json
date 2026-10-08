@@ -9,6 +9,7 @@
   },
   "include": [
     "index.ts",
+    "classes.ts",
     "components/**/*.ts",
     "components/**/*.tsx",
     "tokens/**/*.ts"

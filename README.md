@@ -46,7 +46,7 @@ import { OrochiaLogo, MotionObserver, RotatingWord } from "@krizaka/orochia-desi
 
 | Component | What it is |
 | :--- | :--- |
-| `Button`, `buttonClass` | The one button: primary · secondary · ghost · danger, sm · md · lg, loading. `buttonClass` styles links (works in server components) |
+| `Button`, `buttonClass` | The one button: primary · secondary · ghost · danger, sm · md · lg, loading. `buttonClass` styles links |
 | `IconButton` | Icon-only, accessible name required (`label`) |
 | `ConfirmIconButton` | A destructive action confirmed by a second tap — never `window.confirm` |
 | `Sheet` | Every dialog: a bottom sheet on phones, centred above; Escape, backdrop, focus in and back. Pass `closeLabel` translated |
@@ -55,6 +55,14 @@ import { OrochiaLogo, MotionObserver, RotatingWord } from "@krizaka/orochia-desi
 | `OrochiaLogo`, `KrizakaLogo` | The animated marks, re-exported from `@krizaka/ui` |
 
 Components take their words as props: the apps translate them (`t("…")`) and pass them in.
+
+The package entry is client-side (`"use client"`). Server components take the class helpers and tokens from the
+plain entries:
+
+```ts
+import { buttonClass, cx } from "@krizaka/orochia-design-system/classes";
+import { colors } from "@krizaka/orochia-design-system/tokens";
+```
 
 ## Showcase
 
