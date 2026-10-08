@@ -7,7 +7,8 @@
 ## 1. What this repository is
 
 - The **components of the Orochia applications** (`components/`): `Button` / `buttonClass`, `IconButton`,
-  `ConfirmIconButton`, `Sheet`, `Switch`, `Slider`, `Chip`, `Segmented`, `SocialIcon`, `cx` — the kit the web app and
+  `ConfirmIconButton`, `Sheet`, `Switch`, `Slider`, `Chip`, `Segmented`, `SocialIcon`, `Countdown` / `useCountdown`,
+  `LiveBadge`, `cx` — the kit the web app and
   the admin console import from npm. **Tokens** (`tokens/index.ts`) and the **Tailwind CSS v4 theme** (`theme.css`:
   variants, tokens, `@source` of the package).
 - The **brand marks and the motion signature come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui)**
