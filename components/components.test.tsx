@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Button, Chip, ConfirmIconButton, IconButton, Segmented, Sheet, Switch, buttonClass } from "./index";
+import { Button, Chip, ConfirmIconButton, Countdown, IconButton, LiveBadge, Segmented, Sheet, Switch, buttonClass, splitDuration } from "./index";
 
 describe("Button", () => {
   it("is busy and disabled while loading", () => {
@@ -62,5 +62,23 @@ describe("Sheet", () => {
   it("renders nothing when closed", () => {
     render(<Sheet open={false} onClose={() => undefined} title="x">body</Sheet>);
     expect(screen.queryByRole("dialog")).toBeNull();
+  });
+});
+
+describe("time", () => {
+  it("splits a duration", () => {
+    expect(splitDuration(((2 * 24 + 4) * 3600 + 13 * 60 + 9) * 1000)).toEqual({ d: 2, h: 4, m: 13, s: 9 });
+    expect(splitDuration(-5)).toEqual({ d: 0, h: 0, m: 0, s: 0 });
+  });
+
+  it("is a named timer showing hours, minutes and seconds under a day", () => {
+    render(<Countdown label="Ends in" target={Date.now() + (3600 + 61) * 1000} units={{ d: "d", h: "h", m: "m", s: "s" }} />);
+    const timer = screen.getByRole("timer", { name: "Ends in" });
+    expect(timer.textContent).toMatch(/^01h01m0[01]s$/);
+  });
+
+  it("labels a status", () => {
+    render(<LiveBadge label="Live" />);
+    expect(screen.getByText("Live")).toBeTruthy();
   });
 });

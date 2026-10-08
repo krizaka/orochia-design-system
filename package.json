@@ -1,7 +1,7 @@
 {
   "name": "@krizaka/orochia-design-system",
-  "version": "2.1.0",
-  "description": "The components of the Orochia applications on Tailwind CSS v4 \u2014 buttons, sheets, switches, sliders, chips, two-tap confirmations, social glyphs \u2014 with the Orochia theme and the Krizaka marks and motion from @krizaka/ui.",
+  "version": "2.2.0",
+  "description": "The components of the Orochia applications on Tailwind CSS v4 — buttons, sheets, switches, sliders, chips, countdowns, live badges, two-tap confirmations, social glyphs — with the Orochia theme and the Krizaka marks and motion from @krizaka/ui.",
   "keywords": [
     "orochia",
     "krizaka",

@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Moon, Plus, Sun, Trash2, Upload } from "lucide-react";
-import { Button, Chip, ConfirmIconButton, IconButton, KrizakaLogo, OrochiaLogo, RotatingWord, Segmented, Sheet, Slider, SocialIcon, Switch } from "../index";
+import { Button, Chip, ConfirmIconButton, Countdown, IconButton, KrizakaLogo, LiveBadge, OrochiaLogo, RotatingWord, Segmented, Sheet, Slider, SocialIcon, Switch } from "../index";
 
 /** The showcase: every component in its states. The toggle switches the whole page between the two themes. */
 export default function Showcase() {
@@ -12,6 +12,7 @@ export default function Showcase() {
   const [speed, setSpeed] = useState("1");
   const [quality, setQuality] = useState<"auto" | "1080" | "4k">("auto");
   const [volume, setVolume] = useState(70);
+  const [opened] = useState(() => Date.now());
   const toggleTheme = () => {
     const next = !light;
     setLight(next);
@@ -108,6 +109,19 @@ export default function Showcase() {
               <SocialIcon key={n} network={n} className="h-5 w-5" />
             ))}
           </div>
+        </div>
+      </Section>
+
+      <Section title="Time and status">
+        <div className="flex flex-wrap items-center gap-6">
+          <div className="flex flex-wrap gap-2">
+            <LiveBadge label="Live" />
+            <LiveBadge label="Starts soon" tone="upcoming" />
+            <LiveBadge label="Sold" tone="success" />
+            <LiveBadge label="Ended" tone="muted" />
+          </div>
+          <Countdown label="Ends in" target={opened + 2 * 86400_000 + 4 * 3600_000} units={{ d: "d", h: "h", m: "m", s: "s" }} size="lg" />
+          <Countdown label="Ends in" target={opened + 45_000} units={{ d: "d", h: "h", m: "m", s: "s" }} />
         </div>
       </Section>
 
