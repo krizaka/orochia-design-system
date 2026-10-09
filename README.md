@@ -64,6 +64,15 @@ import { buttonClass, cx } from "@krizaka/orochia-design-system/classes";
 import { colors } from "@krizaka/orochia-design-system/tokens";
 ```
 
+**Native apps** ([orochia-mobile](https://github.com/krizaka/orochia-mobile), React Native) take only the tokens — the
+same palette by role for both themes, and the signature gradient as stops. `react-dom` is an optional peer, so a native
+app installs the package without it:
+
+```ts
+import { themes, gradientStops } from "@krizaka/orochia-design-system/tokens";
+const c = themes[colorScheme === "light" ? "light" : "dark"]; // c.background, c.text, c.accent…
+```
+
 ## Showcase
 
 ```bash
@@ -75,7 +84,7 @@ npm run check      # lint, type-check, tests, library build, showcase build
 ## Release
 
 A `v*` tag publishes to npm from CI with provenance. Semantic versioning; the apps
-([orochia](https://github.com/krizaka/orochia), [orochia-admin](https://github.com/krizaka/orochia-admin)) depend on
+([orochia](https://github.com/krizaka/orochia), [orochia-admin](https://github.com/krizaka/orochia-admin), [orochia-mobile](https://github.com/krizaka/orochia-mobile)) depend on
 a caret range and never keep a copy of a component.
 
 ---
