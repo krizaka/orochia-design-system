@@ -42,8 +42,9 @@ React 19, Tailwind CSS v4. The app's global stylesheet, in this order:
 | **Theme** | `theme.css`: the `--kz-*` roles with the Orochia values (obsidian surfaces, velvet accent, magenta `accent-2`, Outfit display face), dark and `html.light` (Luminous Ivory); `--orochia-story-ring` (`bg-story-ring`), `shadow-glow-primary` / `shadow-glow-accent`. |
 | **Composites** | `orochiaButton` (`buttonVariants` + `variant: "sensual"`, the gradient call to action) · `LiveBadge` (on `Badge`) · `SocialIcon`. |
 | **Tokens** | `colors`, `gradients`, `gradientStops`… — brand values for illustrations, e-mails and native; `nativeTheme` (the @krizaka/tokens native roles with the Orochia overrides). |
-| **Re-exported from `@krizaka/ui`** | `Button`, `IconButton`, `buttonVariants`, `Countdown`, `useCountdown`, `splitDuration`, `cn`, the marks and the motion. Import them from `@krizaka/ui` in new code. |
-| **Deprecated** | `buttonClass` → `buttonVariants` · `cx` → `cn` · `themes` → `nativeTheme` · `Chip`, `Segmented`, `Switch`, `Slider`, `Sheet`, `ConfirmIconButton` — tokenized, kept until their `@krizaka/ui` primitive ships (`chip`, `tabs`, `switch`, `slider`, `dialog`, `confirm-button`). |
+| **Re-exported from `@krizaka/ui`** | `Button`, `IconButton`, `buttonVariants`, `cn`, the marks and the motion. Import them from `@krizaka/ui` in new code. |
+| **Deprecated** | `themes` → `nativeTheme`. |
+| **Removed in 4.0** | `Chip` → `@krizaka/ui/chip` · `Segmented` → `@krizaka/ui/tabs` (`variant="segmented"`, a view) or `Chip.Group` (a filter, a choice) · `Switch` → `@krizaka/ui/switch` · `Slider` → `@krizaka/ui/slider` · `Sheet` → `@krizaka/ui/dialog` · `ConfirmIconButton` → `@krizaka/ui/confirm-button` · `Countdown`, `useCountdown`, `splitDuration` → `@krizaka/ui/countdown` · `buttonClass` → `buttonVariants` · `cx` → `cn` (see the CHANGELOG). |
 | **No longer here** | No palette (`bg-obsidian`, `text-velvet`… are now `bg-surface-0`, `text-accent`), no `light:` / `dark:` variants (from `@krizaka/tailwind`), no primitive of its own. |
 
 ```tsx

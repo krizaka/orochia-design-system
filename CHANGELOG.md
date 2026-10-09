@@ -3,6 +3,30 @@
 All notable changes to `@krizaka/orochia-design-system`. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions: [Semantic Versioning](https://semver.org/).
 
+## [4.0.0] — 2026-10-09
+
+The kit is the Orochia identity only: `theme.css`, the tokens (`nativeTheme`), `orochiaButton`, `LiveBadge`,
+`SocialIcon`. The components deprecated in 3.0 are removed — their `@krizaka/ui` primitives shipped in 2.0.0-beta.2.
+
+### Removed
+
+| Export | Replacement |
+| :-- | :-- |
+| `Chip` | `Chip` from `@krizaka/ui/chip` (`selected` / `onSelectedChange`; `Chip.Group type="single"` for one choice among pills) |
+| `Segmented` | `Tabs` from `@krizaka/ui/tabs` with `variant="segmented"` for a view; `Chip.Group type="single" required` for a filter or a form choice |
+| `Switch` | `Switch` from `@krizaka/ui/switch` (`onChange` → `onCheckedChange`) |
+| `Slider` | `Slider` from `@krizaka/ui/slider` (`onChange` → `onValueChange`, `display` → `formatValue` + `showLabel`, centred fill → `origin`, `reset` → `onDoubleClick`) |
+| `Sheet` | `Sheet` (= `Dialog.Content placement="bottom"`) inside `Dialog.Root` from `@krizaka/ui/dialog` |
+| `ConfirmIconButton` | `ConfirmButton` from `@krizaka/ui/confirm-button` (`size="sm"` for the icon size) |
+| `Countdown`, `useCountdown`, `splitDuration`, `CountdownProps`, `CountdownUnits` | the same, from `@krizaka/ui/countdown` |
+| `buttonClass`, `ButtonVariant`, `ButtonSize` | `buttonVariants({ variant, size, shape })` from `@krizaka/ui/button` (`round` → `shape="pill"`), `orochiaButton({ variant: "sensual" })` for the gradient |
+| `cx` | `cn` (from `@krizaka/ui/cn`, still re-exported here) |
+
+### Changed
+
+- Depends on `@krizaka/ui` / `@krizaka/tokens` `^2.0.0-beta.2`; peer `@krizaka/tailwind >= 2.0.0-beta.2`.
+- The showcase shows the `@krizaka/ui` choices, sheet and confirm button under the Orochia theme.
+
 ## [3.0.0] — 2026-10-09
 
 The kit becomes a theme and a set of composites on the Krizaka platform (`@krizaka/tokens`, `@krizaka/tailwind`,

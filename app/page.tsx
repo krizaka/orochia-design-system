@@ -1,27 +1,17 @@
 "use client";
 
+import { Chip } from "@krizaka/ui/chip";
+import { ConfirmButton } from "@krizaka/ui/confirm-button";
+import { Countdown } from "@krizaka/ui/countdown";
+import { Dialog, Sheet } from "@krizaka/ui/dialog";
+import { Slider } from "@krizaka/ui/slider";
+import { Switch } from "@krizaka/ui/switch";
+import { Tabs } from "@krizaka/ui/tabs";
 import { ThemeToggle } from "@krizaka/ui/theme";
 import { Plus, Trash2, Upload } from "lucide-react";
 import React, { useState, useSyncExternalStore } from "react";
 
-import {
-  Button,
-  Chip,
-  cn,
-  ConfirmIconButton,
-  Countdown,
-  IconButton,
-  KrizakaLogo,
-  LiveBadge,
-  orochiaButton,
-  OrochiaLogo,
-  RotatingWord,
-  Segmented,
-  Sheet,
-  Slider,
-  SocialIcon,
-  Switch,
-} from "../index";
+import { Button, cn, IconButton, KrizakaLogo, LiveBadge, orochiaButton, OrochiaLogo, RotatingWord, SocialIcon } from "../index";
 
 /** The roles theme.css overrides, and the product tokens — shown with their live value in the current theme. */
 const IDENTITY = [
@@ -53,10 +43,7 @@ function readIdentity() {
 
 /** The showcase: every component in its states. The toggle cycles dark → light → system on the whole page. */
 export default function Showcase() {
-  const [sheet, setSheet] = useState(false);
   const [on, setOn] = useState(true);
-  const [speed, setSpeed] = useState("1");
-  const [quality, setQuality] = useState<"auto" | "1080" | "4k">("auto");
   const [volume, setVolume] = useState(70);
   const [opened] = useState(() => Date.now());
   const identity = useSyncExternalStore(subscribeTheme, readIdentity, () => "").split("|");
@@ -68,7 +55,7 @@ export default function Showcase() {
           <OrochiaLogo size={56} title="Orochia" />
           <div>
             <h1 className="font-display text-2xl font-black tracking-tight">
-              Orochia Design System <span className="text-accent">v3</span>
+              Orochia Design System <span className="text-accent">v4</span>
             </h1>
             <p className="text-sm text-fg-secondary">
               Obsidian Velvet Noir on <code>@krizaka/ui</code> · <RotatingWord words={["tokens, not palettes", "both themes", "reduced-motion safe"]} />
@@ -133,59 +120,66 @@ export default function Showcase() {
           <IconButton label="Add" variant="ghost" shape="pill">
             <Plus className="h-4 w-4" />
           </IconButton>
-          <ConfirmIconButton label="Delete the draft" confirmLabel="Delete?" onConfirm={() => undefined}>
+          <ConfirmButton size="sm" label="Delete the draft" confirmLabel="Delete?" onConfirm={() => undefined}>
             <Trash2 className="h-3.5 w-3.5" />
-          </ConfirmIconButton>
+          </ConfirmButton>
           <span className="text-xs text-fg-secondary">Tap the bin twice: destructive actions never use window.confirm.</span>
         </div>
       </Section>
 
-      <Section title="Choices (deprecated, until their @krizaka/ui primitive)">
-        <div className="flex flex-wrap gap-2">
+      <Section title="Choices — the @krizaka/ui primitives under the Orochia theme">
+        <Chip.Group type="single" required label="Speed" defaultValue="1">
           {["0.5", "1", "1.5", "2"].map((s) => (
-            <Chip key={s} active={speed === s} onClick={() => setSpeed(s)}>
+            <Chip key={s} value={s}>
               {s}×
             </Chip>
           ))}
-        </div>
-        <div className="mt-4 max-w-sm">
-          <Segmented label="Quality" value={quality} onChange={setQuality} options={[{ value: "auto", label: "Auto" }, { value: "1080", label: "1080p" }, { value: "4k", label: "4K" }]} />
-        </div>
+        </Chip.Group>
+        <Tabs.Root variant="segmented" defaultValue="auto" className="mt-4">
+          <Tabs.List aria-label="Quality">
+            <Tabs.Trigger value="auto">Auto</Tabs.Trigger>
+            <Tabs.Trigger value="1080">1080p</Tabs.Trigger>
+            <Tabs.Trigger value="4k">4K</Tabs.Trigger>
+          </Tabs.List>
+          <Tabs.Content value="auto" className="text-xs text-fg-secondary">Picked for the connection.</Tabs.Content>
+          <Tabs.Content value="1080" className="text-xs text-fg-secondary">Full HD.</Tabs.Content>
+          <Tabs.Content value="4k" className="text-xs text-fg-secondary">Ultra HD.</Tabs.Content>
+        </Tabs.Root>
         <div className="mt-4 flex items-center gap-3">
-          <Switch checked={on} onChange={setOn} label="E-mail notifications" />
+          <Switch checked={on} onCheckedChange={setOn} label="E-mail notifications" />
           <span className="text-sm">E-mail notifications {on ? "on" : "off"}</span>
         </div>
         <div className="mt-4 max-w-sm">
-          <Slider label="Volume" value={volume} min={0} max={100} step={1} display={`${volume}%`} onChange={setVolume} reset={70} />
+          <Slider label="Volume" showLabel value={volume} onValueChange={setVolume} formatValue={(v) => `${v}%`} onDoubleClick={() => setVolume(70)} />
         </div>
       </Section>
 
-      <Section title="Sheet (deprecated, until @krizaka/ui/dialog)">
-        <Button variant="primary" onClick={() => setSheet(true)}>
-          Open a sheet
-        </Button>
+      <Section title="Sheet — @krizaka/ui/dialog">
+        <Dialog.Root>
+          <Dialog.Trigger asChild>
+            <Button variant="primary">Open a sheet</Button>
+          </Dialog.Trigger>
+          <Sheet closeLabel="Close">
+            <Dialog.Header>
+              <Dialog.Title>Edit video</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Body>
+              <label className="block text-xs font-semibold text-fg-secondary">
+                Title
+                <input defaultValue="Tokyo Neon Horizons" className="mt-1 w-full rounded-xl border border-border-default bg-surface-2 px-3 py-2.5 text-sm text-fg focus:border-accent focus:outline-hidden" />
+              </label>
+            </Dialog.Body>
+            <Dialog.Footer>
+              <Dialog.Close asChild>
+                <Button variant="secondary">Cancel</Button>
+              </Dialog.Close>
+              <Dialog.Close asChild>
+                <Button className={orochiaButton({ variant: "sensual" })}>Save</Button>
+              </Dialog.Close>
+            </Dialog.Footer>
+          </Sheet>
+        </Dialog.Root>
         <p className="mt-2 text-xs text-fg-secondary">A bottom sheet on phones, a centred dialog above. Escape and the backdrop close it; focus goes in and comes back.</p>
-        <Sheet
-          open={sheet}
-          onClose={() => setSheet(false)}
-          title="Edit video"
-          closeLabel="Close"
-          footer={
-            <div className="flex justify-end gap-2">
-              <Button variant="secondary" onClick={() => setSheet(false)}>
-                Cancel
-              </Button>
-              <Button className={orochiaButton({ variant: "sensual" })} onClick={() => setSheet(false)}>
-                Save
-              </Button>
-            </div>
-          }
-        >
-          <label className="block text-xs font-semibold text-fg-secondary">
-            Title
-            <input defaultValue="Tokyo Neon Horizons" className="mt-1 w-full rounded-xl border border-border-default bg-surface-2 px-3 py-2.5 text-sm text-fg focus:border-accent focus:outline-hidden" />
-          </label>
-        </Sheet>
       </Section>
 
       <Section title="Brand and glyphs">

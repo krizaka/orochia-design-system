@@ -11,9 +11,10 @@
     plus the product tokens, prefixed `--orochia-*`;
   - the **composites** that carry Orochia's vocabulary (`orochiaButton`, `LiveBadge`, `SocialIcon`);
   - `tokens/` — brand values (illustrations, native) and `nativeTheme` (the same theme by role, for React Native).
-- The **primitives come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui)** and are re-exported (with
-  deprecations) so that the apps migrate without breaking. `Chip`, `Segmented`, `Switch`, `Slider`, `Sheet`,
-  `ConfirmIconButton` stay here, tokenized and deprecated, until their primitive ships.
+- The **primitives come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui)**: only `Button`, `IconButton`,
+  `buttonVariants`, `cn`, the marks and the motion are still re-exported. Since 4.0 the kit holds no primitive of its
+  own (`Chip`, `Segmented`, `Switch`, `Slider`, `Sheet`, `ConfirmIconButton`, `Countdown`, `buttonClass`, `cx` were
+  removed: the CHANGELOG gives each replacement).
 - A **showcase** (`app/`, Next.js, port 3002): the identity block and every component, in both themes.
 
 ## 2. Aesthetic — Obsidian Velvet Noir
