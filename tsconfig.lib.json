@@ -5,7 +5,7 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "plugins": [],
-    "types": []
+    "types": ["node"]
   },
   "include": [
     "index.ts",

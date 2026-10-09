@@ -1,43 +1,57 @@
-/* @krizaka/orochia-design-system — Tailwind CSS v4 theme.
-   In the app:  @import "tailwindcss";  @import "@krizaka/orochia-design-system/theme.css";
-   It brings the Krizaka motion signature, the Orochia variants and tokens, and tells Tailwind to scan the
-   components shipped in this package. */
-@import "@krizaka/ui/motion.css";
+/* @krizaka/orochia-design-system/theme.css — Obsidian Velvet Noir, expressed as roles.
+
+   The app's global stylesheet, in this order:
+     @import "tailwindcss";
+     @import "@krizaka/tailwind";                           tokens (--kz-*), role utilities, variants, motion
+     @import "@krizaka/ui/tailwind.css";                    Tailwind scans the @krizaka/ui primitives
+     @import "@krizaka/orochia-design-system/theme.css";    this file: the Orochia identity + the kit's components
+
+   This file holds no palette and no variant: it overrides the values of the --kz-* roles (bg-accent is velvet,
+   from-accent to-accent-2 is velvet → magenta) and declares the few product tokens, prefixed --orochia-*.
+   The values mirror `nativeTheme` (tokens/index.ts) — a test keeps the two equal — and every text / on-accent pair
+   is tested at WCAG AA (4.5:1) in both themes. */
 
 @source "./dist";
 
-/* `dark:` follows the `dark` class on <html>. `light:` applies in the light theme (`light` class) — except inside a
-   `.theme-dark` island (media editors, players), which stays dark in both themes; :where() keeps specificity. */
-@custom-variant dark (&:where(.dark, .dark *));
-@custom-variant light {
-  html.light &:where(:not(.theme-dark, .theme-dark *)) {
-    @slot;
-  }
-  .light &:where(:not(.theme-dark, .theme-dark *)) {
-    @slot;
-  }
-  :root:not(.dark) &:where(:not(.theme-dark, .theme-dark *)) {
-    @slot;
-  }
+/* Dark — the default — and the `.theme-dark` island (players, editors), which stays dark inside a light page. */
+:root,
+.theme-dark {
+  --kz-surface-0: #060709; /* obsidian */
+  --kz-surface-1: #0c0e14; /* obsidian surface */
+  --kz-surface-2: #121520; /* obsidian card */
+  --kz-surface-3: #1a1e2c;
+  --kz-border-default: #1f2438; /* obsidian border */
+  --kz-accent: #7c3aed; /* velvet — carries white text at 5.7:1 */
+  --kz-accent-hover: #6d28d9;
+  --kz-accent-soft: rgb(139 92 246 / 0.12);
+  --kz-accent-2: #db2777; /* sensual magenta — gradients from-accent to-accent-2 under white text (4.6:1) */
+  --kz-ring: #a78bfa;
+  --kz-font-display: Outfit, var(--kz-font-sans);
 }
 
-@theme {
-  /* Obsidian Velvet Noir */
-  --color-obsidian: #060709;
-  --color-obsidian-surface: #0c0e14;
-  --color-obsidian-card: #121520;
-  --color-obsidian-border: #1f2438;
-  --color-velvet: #8b5cf6;
-  --color-sensual: #ec4899;
-  --color-flame: #f43f5e;
-
-  --shadow-glow-primary: 0 0 25px -5px rgb(139 92 246 / 0.4);
-  --shadow-glow-accent: 0 0 25px -5px rgb(236 72 153 / 0.4);
+/* Light — Luminous Ivory Cashmere & Rose. The roles not listed keep the @krizaka/tokens light values. */
+html.light {
+  --kz-surface-0: #f8fafc;
+  --kz-accent: #7c3aed;
+  --kz-accent-hover: #6d28d9;
+  --kz-accent-soft: rgb(124 58 237 / 0.08);
+  --kz-accent-2: #db2777;
+  --kz-ring: #7c3aed;
 }
 
+/* Product tokens: prefixed, never generic. */
+:root {
+  --orochia-story-ring: linear-gradient(135deg, var(--kz-accent), var(--kz-accent-2));
+  --orochia-glow-accent: 0 0 25px -5px color-mix(in oklab, var(--kz-accent) 40%, transparent);
+  --orochia-glow-accent-2: 0 0 25px -5px color-mix(in oklab, var(--kz-accent-2) 40%, transparent);
+}
+
+/* The product tokens as utilities: shadow-glow-primary / shadow-glow-accent (kept from 2.x), bg-story-ring. */
 @theme inline {
-  /* Every transition uses the Krizaka easing (from @krizaka/ui/motion.css) with a calm default duration. */
-  --default-transition-duration: 200ms;
-  --default-transition-timing-function: var(--kz-ease);
-  --ease-kz: var(--kz-ease);
+  --shadow-glow-primary: var(--orochia-glow-accent);
+  --shadow-glow-accent: var(--orochia-glow-accent-2);
+}
+
+@utility bg-story-ring {
+  background-image: var(--orochia-story-ring);
 }

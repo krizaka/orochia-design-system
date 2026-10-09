@@ -1,0 +1,5 @@
+{
+  "globs": ["app/**/*.{ts,tsx}", "components/**/*.{ts,tsx}", "classes.ts", "index.ts"],
+  "allow": [],
+  "counters": { "palette": 0, "light": 0, "arbitraryVar": 0, "classNameTemplate": 0 }
+}

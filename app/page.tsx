@@ -1,24 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
-import { Moon, Plus, Sun, Trash2, Upload } from "lucide-react";
-import { Button, Chip, ConfirmIconButton, Countdown, IconButton, KrizakaLogo, LiveBadge, OrochiaLogo, RotatingWord, Segmented, Sheet, Slider, SocialIcon, Switch } from "../index";
+import { ThemeToggle } from "@krizaka/ui/theme";
+import { Plus, Trash2, Upload } from "lucide-react";
+import React, { useState, useSyncExternalStore } from "react";
 
-/** The showcase: every component in its states. The toggle switches the whole page between the two themes. */
+import {
+  Button,
+  Chip,
+  cn,
+  ConfirmIconButton,
+  Countdown,
+  IconButton,
+  KrizakaLogo,
+  LiveBadge,
+  orochiaButton,
+  OrochiaLogo,
+  RotatingWord,
+  Segmented,
+  Sheet,
+  Slider,
+  SocialIcon,
+  Switch,
+} from "../index";
+
+/** The roles theme.css overrides, and the product tokens — shown with their live value in the current theme. */
+const IDENTITY = [
+  "surface-0",
+  "surface-1",
+  "surface-2",
+  "surface-3",
+  "border-default",
+  "accent",
+  "accent-hover",
+  "accent-soft",
+  "accent-2",
+  "ring",
+  "on-accent",
+] as const;
+
+const UNITS = { d: "d", h: "h", m: "m", s: "s" };
+
+// The computed values follow the `light` class on <html>: an external store fed by a MutationObserver.
+function subscribeTheme(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+  return () => observer.disconnect();
+}
+function readIdentity() {
+  const style = getComputedStyle(document.documentElement);
+  return [...IDENTITY.map((n) => `--kz-${n}`), "--kz-font-display"].map((n) => style.getPropertyValue(n).trim()).join("|");
+}
+
+/** The showcase: every component in its states. The toggle cycles dark → light → system on the whole page. */
 export default function Showcase() {
-  const [light, setLight] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [on, setOn] = useState(true);
   const [speed, setSpeed] = useState("1");
   const [quality, setQuality] = useState<"auto" | "1080" | "4k">("auto");
   const [volume, setVolume] = useState(70);
   const [opened] = useState(() => Date.now());
-  const toggleTheme = () => {
-    const next = !light;
-    setLight(next);
-    document.documentElement.classList.toggle("light", next);
-    document.documentElement.classList.toggle("dark", !next);
-  };
+  const identity = useSyncExternalStore(subscribeTheme, readIdentity, () => "").split("|");
 
   return (
     <main className="mx-auto max-w-5xl space-y-10 px-5 py-12">
@@ -26,43 +67,85 @@ export default function Showcase() {
         <div className="flex items-center gap-4">
           <OrochiaLogo size={56} title="Orochia" />
           <div>
-            <h1 className="text-2xl font-black tracking-tight">
-              Orochia Design System <span className="text-violet-400 light:text-violet-700">v2</span>
+            <h1 className="font-display text-2xl font-black tracking-tight">
+              Orochia Design System <span className="text-accent">v3</span>
             </h1>
-            <p className="text-sm text-zinc-400 light:text-slate-500">
-              Tailwind CSS v4 · marks and motion from <code>@krizaka/ui</code> · <RotatingWord words={["accessible", "both themes", "reduced-motion safe"]} />
+            <p className="text-sm text-fg-secondary">
+              Obsidian Velvet Noir on <code>@krizaka/ui</code> · <RotatingWord words={["tokens, not palettes", "both themes", "reduced-motion safe"]} />
             </p>
           </div>
         </div>
-        <Button variant="secondary" icon={light ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />} onClick={toggleTheme}>
-          {light ? "Dark theme" : "Light theme"}
-        </Button>
+        <ThemeToggle label={(mode) => `Theme: ${mode} (change)`} shape="pill" />
       </header>
 
-      <Section title="Buttons">
+      <Section title="Identity — the --kz-* roles theme.css overrides">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {IDENTITY.map((name, i) => (
+            <div key={name} className="overflow-hidden rounded-xl border border-border-default">
+              <div className="h-12" style={{ background: `var(--kz-${name})` }} />
+              <div className="px-3 py-2">
+                <code className="text-xs text-fg">--kz-{name}</code>
+                <div className="font-mono text-[11px] text-fg-secondary" suppressHydrationWarning>
+                  {identity[i] || "…"}
+                </div>
+              </div>
+            </div>
+          ))}
+          <div className="overflow-hidden rounded-xl border border-border-default">
+            <div className="h-12 bg-story-ring" />
+            <div className="px-3 py-2">
+              <code className="text-xs text-fg">--orochia-story-ring</code>
+              <div className="font-mono text-[11px] text-fg-secondary">bg-story-ring</div>
+            </div>
+          </div>
+        </div>
+        <p className="mt-4 font-display text-xl font-bold">
+          Outfit is the display face <span className="font-mono text-xs font-normal text-fg-secondary" suppressHydrationWarning>{identity[IDENTITY.length]}</span>
+        </p>
+      </Section>
+
+      <Section title="Buttons — @krizaka/ui, plus orochiaButton">
         <div className="flex flex-wrap items-center gap-3">
-          <Button variant="primary" className="kz-sheen" icon={<Upload className="h-4 w-4" />}>Primary</Button>
+          <Button className={orochiaButton({ variant: "sensual", shape: "pill" })}>
+            <Upload className="h-4 w-4" />
+            Sensual
+          </Button>
+          <Button variant="primary">Primary</Button>
           <Button variant="secondary">Secondary</Button>
+          <Button variant="outline">Outline</Button>
           <Button variant="ghost">Ghost</Button>
           <Button variant="danger">Danger</Button>
-          <Button variant="primary" loading>Saving</Button>
-          <Button variant="secondary" disabled>Disabled</Button>
-          <Button variant="primary" size="sm">Small</Button>
-          <Button variant="primary" size="lg">Large</Button>
+          <Button variant="primary" loading>
+            Saving…
+          </Button>
+          <Button variant="secondary" disabled>
+            Disabled
+          </Button>
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <Button className={orochiaButton({ variant: "sensual", size: "sm", shape: "pill" })}>Small</Button>
+          <Button className={orochiaButton({ variant: "sensual", size: "lg", shape: "pill" })}>Large</Button>
+          <Button asChild variant="outline" shape="pill">
+            <a href="#identity">A link, as a button</a>
+          </Button>
         </div>
         <div className="mt-4 flex items-center gap-2">
-          <IconButton label="Add"><Plus className="h-4 w-4" /></IconButton>
+          <IconButton label="Add" variant="ghost" shape="pill">
+            <Plus className="h-4 w-4" />
+          </IconButton>
           <ConfirmIconButton label="Delete the draft" confirmLabel="Delete?" onConfirm={() => undefined}>
             <Trash2 className="h-3.5 w-3.5" />
           </ConfirmIconButton>
-          <span className="text-xs text-zinc-500 light:text-slate-500">Tap the bin twice: destructive actions never use window.confirm.</span>
+          <span className="text-xs text-fg-secondary">Tap the bin twice: destructive actions never use window.confirm.</span>
         </div>
       </Section>
 
-      <Section title="Choices">
+      <Section title="Choices (deprecated, until their @krizaka/ui primitive)">
         <div className="flex flex-wrap gap-2">
           {["0.5", "1", "1.5", "2"].map((s) => (
-            <Chip key={s} active={speed === s} onClick={() => setSpeed(s)}>{s}×</Chip>
+            <Chip key={s} active={speed === s} onClick={() => setSpeed(s)}>
+              {s}×
+            </Chip>
           ))}
         </div>
         <div className="mt-4 max-w-sm">
@@ -77,9 +160,11 @@ export default function Showcase() {
         </div>
       </Section>
 
-      <Section title="Sheet">
-        <Button variant="primary" onClick={() => setSheet(true)}>Open a sheet</Button>
-        <p className="mt-2 text-xs text-zinc-500 light:text-slate-500">A bottom sheet on phones, a centred dialog above. Escape and the backdrop close it; focus goes in and comes back.</p>
+      <Section title="Sheet (deprecated, until @krizaka/ui/dialog)">
+        <Button variant="primary" onClick={() => setSheet(true)}>
+          Open a sheet
+        </Button>
+        <p className="mt-2 text-xs text-fg-secondary">A bottom sheet on phones, a centred dialog above. Escape and the backdrop close it; focus goes in and comes back.</p>
         <Sheet
           open={sheet}
           onClose={() => setSheet(false)}
@@ -87,14 +172,18 @@ export default function Showcase() {
           closeLabel="Close"
           footer={
             <div className="flex justify-end gap-2">
-              <Button variant="secondary" onClick={() => setSheet(false)}>Cancel</Button>
-              <Button variant="primary" onClick={() => setSheet(false)}>Save</Button>
+              <Button variant="secondary" onClick={() => setSheet(false)}>
+                Cancel
+              </Button>
+              <Button className={orochiaButton({ variant: "sensual" })} onClick={() => setSheet(false)}>
+                Save
+              </Button>
             </div>
           }
         >
-          <label className="block text-xs font-semibold text-zinc-400 light:text-slate-500">
+          <label className="block text-xs font-semibold text-fg-secondary">
             Title
-            <input defaultValue="Tokyo Neon Horizons" className="mt-1 w-full rounded-xl border border-white/10 bg-zinc-900 px-3 py-2.5 text-sm text-white focus:border-violet-500 focus:outline-hidden light:border-black/10 light:bg-slate-50 light:text-slate-900" />
+            <input defaultValue="Tokyo Neon Horizons" className="mt-1 w-full rounded-xl border border-border-default bg-surface-2 px-3 py-2.5 text-sm text-fg focus:border-accent focus:outline-hidden" />
           </label>
         </Sheet>
       </Section>
@@ -104,11 +193,14 @@ export default function Showcase() {
           <OrochiaLogo size={96} />
           <OrochiaLogo size={32} />
           <KrizakaLogo size={64} />
-          <div className="flex gap-3 text-zinc-300 light:text-slate-600">
+          <div className="flex gap-3 text-fg-secondary">
             {["instagram", "x", "facebook", "tiktok", "youtube"].map((n) => (
               <SocialIcon key={n} network={n} className="h-5 w-5" />
             ))}
           </div>
+          <span className="h-14 w-14 rounded-full bg-story-ring p-0.5">
+            <span className="block h-full w-full rounded-full bg-surface-2" />
+          </span>
         </div>
       </Section>
 
@@ -120,16 +212,25 @@ export default function Showcase() {
             <LiveBadge label="Sold" tone="success" />
             <LiveBadge label="Ended" tone="muted" />
           </div>
-          <Countdown label="Ends in" target={opened + 2 * 86400_000 + 4 * 3600_000} units={{ d: "d", h: "h", m: "m", s: "s" }} size="lg" />
-          <Countdown label="Ends in" target={opened + 45_000} units={{ d: "d", h: "h", m: "m", s: "s" }} />
+          <Countdown label="Ends in" target={opened + 2 * 86400_000 + 4 * 3600_000} units={UNITS} size="lg" />
+          <Countdown label="Ends in" target={opened + 45_000} units={UNITS} />
+        </div>
+      </Section>
+
+      <Section title="A .theme-dark island (a player) — dark in both themes">
+        <div className="theme-dark flex flex-wrap items-center gap-3 rounded-2xl bg-surface-0 p-5 text-fg">
+          <LiveBadge label="Live" />
+          <Button className={orochiaButton({ variant: "sensual", shape: "pill" })}>Tip</Button>
+          <Button variant="ghost">Ghost</Button>
+          <Countdown label="Ends in" target={opened + 3600_000} units={UNITS} size="sm" />
         </div>
       </Section>
 
       <Section title="Motion">
         <div className="grid gap-4 sm:grid-cols-3">
           {["kz-spotlight", "kz-lift", "kz-pop"].map((c, i) => (
-            <div key={c} data-reveal style={{ "--kz-delay": `${i * 80}ms` } as React.CSSProperties} className={`${c} rounded-2xl border border-white/10 bg-zinc-900/60 p-5 light:border-black/10 light:bg-white`}>
-              <code className="text-xs text-violet-300 light:text-violet-700">.{c}</code>
+            <div key={c} data-reveal style={{ "--kz-delay": `${i * 80}ms` } as React.CSSProperties} className={cn(c, "rounded-2xl border border-border-default bg-surface-1 p-5")}>
+              <code className="text-xs text-accent">.{c}</code>
             </div>
           ))}
         </div>
@@ -139,9 +240,10 @@ export default function Showcase() {
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  const id = title.split(" ")[0].toLowerCase();
   return (
-    <section data-reveal className="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 light:border-black/10 light:bg-white">
-      <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-zinc-400 light:text-slate-500">{title}</h2>
+    <section id={id} data-reveal className="rounded-3xl border border-border-default bg-surface-1 p-6">
+      <h2 className="mb-4 text-xs font-bold uppercase tracking-widest text-fg-secondary">{title}</h2>
       {children}
     </section>
   );

@@ -1,11 +1,13 @@
 {
   "name": "@krizaka/orochia-design-system",
-  "version": "2.3.0",
-  "description": "The components of the Orochia applications on Tailwind CSS v4 \u2014 buttons, sheets, switches, sliders, chips, countdowns, live badges, two-tap confirmations, social glyphs \u2014 with the Orochia theme and the Krizaka marks and motion from @krizaka/ui.",
+  "version": "3.0.0",
+  "description": "The Orochia identity on the Krizaka platform: the Obsidian Velvet Noir theme as --kz-* token overrides, the product composites (LiveBadge, SocialIcon, orochiaButton) and the @krizaka/ui primitives re-exported for a migration without breakage.",
   "keywords": [
     "orochia",
     "krizaka",
     "design-system",
+    "theme",
+    "design-tokens",
     "react",
     "tailwindcss",
     "tailwind-v4",
@@ -53,21 +55,28 @@
     "build": "next build",
     "build:lib": "tsup",
     "start": "next start -p 3002",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0 && krizaka-ratchet",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "check": "npm run lint && npm run typecheck && npm test && npm run build:lib && npm run build",
-    "prepublishOnly": "npm run typecheck && npm test && npm run build:lib"
+    "check": "npm run lint && npm run typecheck && npm test && npm run build:lib && npm run publint && npm run build",
+    "prepublishOnly": "npm run typecheck && npm test && npm run build:lib",
+    "publint": "publint"
   },
   "dependencies": {
-    "@krizaka/ui": "^1.0.0",
-    "lucide-react": "^1.17.0"
+    "@krizaka/tokens": "^2.0.0-beta.0",
+    "@krizaka/ui": "^2.0.0-beta.0",
+    "lucide-react": "^1.17.0",
+    "tailwind-variants": "^3.3.1"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
+    "@krizaka/tailwind": ">=2.0.0-beta.0",
+    "react": ">=19",
+    "react-dom": ">=19",
+    "tailwindcss": "^4.1"
   },
   "devDependencies": {
+    "@krizaka/config": "^0.1.0",
+    "@krizaka/tailwind": "^2.0.0-beta.0",
     "@tailwindcss/postcss": "^4.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
@@ -78,6 +87,7 @@
     "eslint-config-next": "^16.4.0",
     "happy-dom": "^20.0.0",
     "next": "^16.4.0",
+    "publint": "^0.3.25",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.1.0",
