@@ -1,8 +1,12 @@
 /**
  * OROCHIA DESIGN SYSTEM — TOKENS
- * Obsidian Velvet Noir & Cyber-Sensual Luxury
- * Crafted by Krizaka Architecture
+ * Obsidian Velvet Noir & Cyber-Sensual Luxury.
+ *
+ * `colors`, `gradients`, `shadows`, `radii`, `typography`, `gradientStops` are BRAND values — for illustrations, e-mails,
+ * OG images and the native app. A web component never reads them: it reads a role (`bg-accent`, `text-fg-secondary`),
+ * which theme.css gives the Orochia values. `nativeTheme` is the same theme, by role, for React Native.
  */
+import { type Theme, themes as kzThemes } from "@krizaka/tokens/native";
 
 export const colors = {
   obsidian: {
@@ -65,46 +69,82 @@ export const typography = {
 } as const;
 
 /**
- * Semantic themes for platforms without Tailwind (the React Native app): the same palette the web kit's `dark` and
- * `light:` classes use, by role. Gradients are colour stops, ready for a native linear gradient.
+ * The Orochia theme for platforms without CSS (the React Native app): the @krizaka/tokens native themes with the
+ * Obsidian Velvet Noir roles overridden — the same values as theme.css (a test keeps them equal). An override, never a
+ * copy: every role Orochia does not change follows @krizaka/tokens.
  */
-export const themes = {
-  dark: {
-    background: "#09090b",
-    surface: "#18181b",
-    surfaceElevated: "#27272a",
-    border: "rgba(255, 255, 255, 0.10)",
-    text: "#ffffff",
-    textSecondary: "#a1a1aa",
-    textTertiary: "#71717a",
-    accent: "#a78bfa",
-    accentStrong: "#8b5cf6",
-    magenta: "#e879f9",
-    success: "#34d399",
-    warning: "#fbbf24",
-    danger: "#fb7185",
-    onAccent: "#ffffff",
-  },
-  light: {
-    background: "#ffffff",
-    surface: "#f8fafc",
-    surfaceElevated: "#f1f5f9",
-    border: "rgba(0, 0, 0, 0.08)",
-    text: "#0f172a",
-    textSecondary: "#475569",
-    textTertiary: "#64748b",
-    accent: "#6d28d9",
-    accentStrong: "#7c3aed",
-    magenta: "#c026d3",
-    success: "#047857",
-    warning: "#b45309",
-    danger: "#be123c",
-    onAccent: "#ffffff",
-  },
-} as const;
+const darkOverrides = {
+  surface0: "#060709",
+  surface1: "#0c0e14",
+  surface2: "#121520",
+  surface3: "#1a1e2c",
+  borderDefault: "#1f2438",
+  accent: "#7c3aed",
+  accentHover: "#6d28d9",
+  accentSoft: "rgba(139,92,246,0.12)",
+  accent2: "#db2777",
+  ring: "#a78bfa",
+} as const satisfies Partial<Theme>;
 
-export type ThemeName = keyof typeof themes;
-export type ThemeColors = { [K in keyof (typeof themes)["dark"]]: string };
+const lightOverrides = {
+  surface0: "#f8fafc",
+  accent: "#7c3aed",
+  accentHover: "#6d28d9",
+  accentSoft: "rgba(124,58,237,0.08)",
+  accent2: "#db2777",
+  ring: "#7c3aed",
+} as const satisfies Partial<Theme>;
+
+export const nativeTheme: { readonly dark: Theme; readonly light: Theme } = {
+  dark: { ...kzThemes.dark, ...darkOverrides },
+  light: { ...kzThemes.light, ...lightOverrides },
+};
+
+/** The roles of one theme (the @krizaka/tokens native `Theme`). */
+export type { Theme };
+export type ThemeName = keyof typeof nativeTheme;
+
+/** @deprecated Since 3.0 — the 2.x key names (`background`, `text`…), kept for the apps that still read them. Use
+ * `nativeTheme` (the @krizaka/tokens roles: `surface0`, `textPrimary`…). */
+export type ThemeColors = {
+  background: string;
+  surface: string;
+  surfaceElevated: string;
+  border: string;
+  text: string;
+  textSecondary: string;
+  textTertiary: string;
+  accent: string;
+  accentStrong: string;
+  magenta: string;
+  success: string;
+  warning: string;
+  danger: string;
+  onAccent: string;
+};
+
+const legacy = (t: Theme): ThemeColors => ({
+  background: t.surface0,
+  surface: t.surface1,
+  surfaceElevated: t.surface2,
+  border: t.borderDefault,
+  text: t.textPrimary,
+  textSecondary: t.textSecondary,
+  textTertiary: t.textMuted,
+  accent: t.accent,
+  accentStrong: t.accentHover,
+  magenta: t.accent2,
+  success: t.success,
+  warning: t.warning,
+  danger: t.danger,
+  onAccent: t.onAccent,
+});
+
+/** @deprecated Since 3.0 — derived from `nativeTheme` under the 2.x key names. Use `nativeTheme`. */
+export const themes: { readonly dark: ThemeColors; readonly light: ThemeColors } = {
+  dark: legacy(nativeTheme.dark),
+  light: legacy(nativeTheme.light),
+};
 
 /** The signature violet → fuchsia → pink gradient, as stops. */
 export const gradientStops = {

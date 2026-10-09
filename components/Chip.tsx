@@ -1,20 +1,25 @@
 "use client";
 
 import React from "react";
-import { cx } from "./cx";
 
-/** A toggleable pill (speed, options): pressed state announced, readable in both themes. */
+import { cn } from "./cx";
+
+/**
+ * A toggleable pill (speed, options): pressed state announced, readable in both themes. State: `data-state`.
+ * @deprecated Since 3.0 — moves to `Chip` from `@krizaka/ui/chip` (Radix Toggle Group) in the next major.
+ */
 export function Chip({ active, className, children, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement> & { active: boolean }) {
   return (
     <button
       type="button"
       aria-pressed={active}
+      data-state={active ? "on" : "off"}
       {...rest}
-      className={cx(
-        "inline-flex h-9 items-center justify-center gap-1.5 rounded-full border px-3.5 text-xs font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-violet-400 disabled:opacity-40",
+      className={cn(
+        "inline-flex h-9 items-center justify-center gap-1.5 rounded-full border px-3.5 text-xs font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-40",
         active
-          ? "border-violet-500 bg-violet-600/20 text-violet-100 light:text-violet-800"
-          : "border-white/10 text-zinc-300 hover:border-white/25 hover:text-white light:border-black/10 light:text-slate-600 hover:light:border-black/25 hover:light:text-slate-950",
+          ? "border-accent bg-accent-soft text-fg"
+          : "border-border-default text-fg-secondary hover:border-border-strong hover:text-fg",
         className,
       )}
     >
@@ -23,21 +28,40 @@ export function Chip({ active, className, children, ...rest }: React.ButtonHTMLA
   );
 }
 
-/** One choice among a few, as a segmented control (radio semantics). */
-export function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: { value: T; label: React.ReactNode; disabled?: boolean }[]; onChange: (v: T) => void; label: string }) {
+/**
+ * One choice among a few, as a segmented control (radio semantics). State: `data-state` on each option.
+ * @deprecated Since 3.0 — moves to `Tabs` (`variant="segmented"`) from `@krizaka/ui/tabs` in the next major.
+ */
+export function Segmented<T extends string>({
+  value,
+  options,
+  onChange,
+  label,
+}: {
+  value: T;
+  options: { value: T; label: React.ReactNode; disabled?: boolean }[];
+  onChange: (v: T) => void;
+  label: string;
+}) {
   return (
-    <div role="radiogroup" aria-label={label} className="grid gap-1 rounded-2xl border border-white/10 p-1 light:border-black/10" style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}>
+    <div
+      role="radiogroup"
+      aria-label={label}
+      className="grid gap-1 rounded-2xl border border-border-default p-1"
+      style={{ gridTemplateColumns: `repeat(${options.length}, minmax(0, 1fr))` }}
+    >
       {options.map((o) => (
         <button
           key={o.value}
           type="button"
           role="radio"
           aria-checked={value === o.value}
+          data-state={value === o.value ? "on" : "off"}
           disabled={o.disabled}
           onClick={() => onChange(o.value)}
-          className={cx(
-            "flex min-h-9 items-center justify-center gap-2 rounded-xl px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-violet-400 disabled:opacity-30",
-            value === o.value ? "bg-violet-600 text-white shadow-sm" : "text-zinc-400 hover:bg-white/5 hover:text-white light:text-slate-600 hover:light:bg-black/5 hover:light:text-slate-950",
+          className={cn(
+            "flex min-h-9 items-center justify-center gap-2 rounded-xl px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-30",
+            value === o.value ? "bg-accent text-on-accent shadow-sm" : "text-fg-secondary hover:bg-surface-2 hover:text-fg",
           )}
         >
           {o.label}

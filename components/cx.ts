@@ -1,2 +1,9 @@
-/** Joins class names, skipping falsy values. */
-export const cx = (...parts: (string | false | null | undefined)[]) => parts.filter(Boolean).join(" ");
+import { cn } from "@krizaka/ui/cn";
+
+/**
+ * Joins and merges class names (the last Tailwind class wins).
+ * @deprecated Since 3.0 — use `cn` from `@krizaka/ui/cn` (re-exported here as `cn`).
+ */
+export const cx = cn;
+
+export { cn };

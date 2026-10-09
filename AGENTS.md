@@ -6,29 +6,33 @@
 
 ## 1. What this repository is
 
-- The **components of the Orochia applications** (`components/`): `Button` / `buttonClass`, `IconButton`,
-  `ConfirmIconButton`, `Sheet`, `Switch`, `Slider`, `Chip`, `Segmented`, `SocialIcon`, `Countdown` / `useCountdown`,
-  `LiveBadge`, `cx` — the kit the web app and
-  the admin console import from npm. **Tokens** (`tokens/index.ts`) and the **Tailwind CSS v4 theme** (`theme.css`:
-  variants, tokens, `@source` of the package).
-- The **brand marks and the motion signature come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui)**
-  (re-exported, never copied).
-- A **showcase** (`app/`, Next.js, port 3002) that renders every component in its states, in both themes.
+- The **Orochia identity on the Krizaka platform** (level 2 of the platform, study §2.2):
+  - `theme.css` — Obsidian Velvet Noir as overrides of the `--kz-*` roles of `@krizaka/tokens` (dark and `html.light`),
+    plus the product tokens, prefixed `--orochia-*`;
+  - the **composites** that carry Orochia's vocabulary (`orochiaButton`, `LiveBadge`, `SocialIcon`);
+  - `tokens/` — brand values (illustrations, native) and `nativeTheme` (the same theme by role, for React Native).
+- The **primitives come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui)** and are re-exported (with
+  deprecations) so that the apps migrate without breaking. `Chip`, `Segmented`, `Switch`, `Slider`, `Sheet`,
+  `ConfirmIconButton` stay here, tokenized and deprecated, until their primitive ships.
+- A **showcase** (`app/`, Next.js, port 3002): the identity block and every component, in both themes.
 
 ## 2. Aesthetic — Obsidian Velvet Noir
 
-- Dark-first surfaces, velvet violet → fuchsia → pink accents, glass borders; the light theme is first-class
-  (every surface and text colour has its `light:` counterpart).
-- WCAG AA contrast; visible focus rings; every motion stops under `prefers-reduced-motion`.
+- Dark-first obsidian surfaces, velvet accent, sensual magenta second accent, Outfit display face; the light theme
+  (Luminous Ivory) is first-class. A theme is a set of token **values**, never a set of classes.
+- WCAG AA contrast, tested in `tokens/theme.test.ts`; visible focus rings (`ring-ring`); every motion stops under
+  `prefers-reduced-motion`.
 
 ## 3. Rules
 
-- **No app dependency**: components receive data **and words** through props (labels are translated by the apps);
-  no fetching, no routing, no business rules, no i18n library.
-- **Accessible by construction**: ARIA roles (switch, radiogroup, dialog), accessible names required on icon-only
-  buttons, Escape / backdrop / focus return on `Sheet`.
-- Destructive actions confirm with a second tap (`ConfirmIconButton`), never `window.confirm`.
-- New shared UI is built here first, with a showcase entry and a test, then released and adopted by the apps.
+- **No primitive here.** A missing or insufficient primitive is a pull request in `krizaka-ui` (change, changeset,
+  release), then adopted here — never a local copy or fork. In order: a token (`theme.css`), a variant (`tv({ extend })`)
+  or a `className`, a composite that **composes** primitives.
+- **Roles only**: no raw palette colour, no `light:` / `dark:`, no `[var(--…)]`, no template string in `className`
+  (`@krizaka/config` lint, `lint-ratchet.json` at zero). `theme.css` and `nativeTheme` hold the same values (tested).
+- **No app dependency**: components receive data **and words** through props; no fetching, no routing, no i18n.
+- Destructive actions confirm with a second tap, never `window.confirm`.
+- Every composite has a showcase entry and a test.
 
 ## 4. Build & release
 
@@ -38,10 +42,10 @@ npm run dev          # showcase on :3002
 npm run check        # lint, type-check, tests, library build, showcase build
 ```
 
-A consuming app installs `@krizaka/orochia-design-system` from npm and adds
-`@import "@krizaka/orochia-design-system/theme.css";` after `@import "tailwindcss";`.
+A consuming app imports `tailwindcss`, `@krizaka/tailwind`, `@krizaka/ui/tailwind.css`, then
+`@krizaka/orochia-design-system/theme.css` (see the head of `theme.css`).
 A `v*` tag publishes to npm from CI with provenance.
 
 ## 5. Definition of done
 
-`npm run check` passes; the showcase shows the new or changed component in its states, in both themes.
+`npm run check` passes (lint + ratchet, type-check, tests, library build, publint, showcase); the showcase shows the new or changed component in its states, in both themes.
