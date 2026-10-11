@@ -6,7 +6,7 @@
  * OG images and the native app. A web component never reads them: it reads a role (`bg-accent`, `text-fg-secondary`),
  * which theme.css gives the Orochia values. `nativeTheme` is the same theme, by role, for React Native.
  */
-import { type Theme, themes as kzThemes } from "@krizaka/tokens/native";
+import { brands, type Theme, themes as kzThemes } from "@krizaka/tokens/native";
 
 export const colors = {
   obsidian: {
@@ -70,8 +70,10 @@ export const typography = {
 
 /**
  * The Orochia theme for platforms without CSS (the React Native app): the @krizaka/tokens native themes with the
- * Obsidian Velvet Noir roles overridden — the same values as theme.css (a test keeps them equal). An override, never a
- * copy: every role Orochia does not change follows @krizaka/tokens.
+ * Orochia brand (`brands.orochia`: the accent family — `accentText`, `info`, `onAccent`, the section gradient — the
+ * values the web reads from `@krizaka/tokens/brands/orochia.css`) and the Obsidian Velvet Noir roles on top — the same
+ * values as theme.css (a test keeps them equal). An override, never a copy: every role Orochia does not change follows
+ * @krizaka/tokens.
  */
 const darkOverrides = {
   surface0: "#060709",
@@ -96,8 +98,8 @@ const lightOverrides = {
 } as const satisfies Partial<Theme>;
 
 export const nativeTheme: { readonly dark: Theme; readonly light: Theme } = {
-  dark: { ...kzThemes.dark, ...darkOverrides },
-  light: { ...kzThemes.light, ...lightOverrides },
+  dark: { ...kzThemes.dark, ...brands.orochia.dark, ...darkOverrides },
+  light: { ...kzThemes.light, ...brands.orochia.light, ...lightOverrides },
 };
 
 /** The roles of one theme (the @krizaka/tokens native `Theme`). */
