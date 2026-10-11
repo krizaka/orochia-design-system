@@ -1,7 +1,7 @@
 {
   "name": "@krizaka/orochia-design-system",
-  "version": "4.0.0",
-  "description": "The Orochia identity on the Krizaka platform: the Obsidian Velvet Noir theme as --kz-* token overrides and the product composites (LiveBadge, SocialIcon, orochiaButton). The primitives come from @krizaka/ui.",
+  "version": "4.1.0",
+  "description": "The Orochia identity on the Krizaka platform: the Obsidian Velvet Noir theme as --kz-* token overrides and the product composites (StatusBadge, SocialIcon, orochiaButton), with their documentation registry (krizaka.com/docs/orochia/ui). The primitives come from @krizaka/ui.",
   "keywords": [
     "orochia",
     "krizaka",
@@ -39,10 +39,13 @@
       "import": "./dist/tokens.js"
     },
     "./theme.css": "./theme.css",
+    "./registry/examples/*": "./registry/examples/*.tsx",
+    "./registry/*": "./registry/*",
     "./package.json": "./package.json"
   },
   "files": [
     "dist",
+    "registry",
     "theme.css",
     "README.md",
     "LICENSE"
@@ -53,7 +56,7 @@
   "scripts": {
     "dev": "next dev -p 3002",
     "build": "next build",
-    "build:lib": "tsup",
+    "build:lib": "tsup && node scripts/build-registry.mjs",
     "start": "next start -p 3002",
     "lint": "eslint . --max-warnings 0 && krizaka-ratchet",
     "typecheck": "tsc --noEmit",
@@ -63,8 +66,8 @@
     "publint": "publint"
   },
   "dependencies": {
-    "@krizaka/tokens": "^2.0.0-beta.2",
-    "@krizaka/ui": "^2.0.0-beta.2",
+    "@krizaka/tokens": "^2.2.0",
+    "@krizaka/ui": "^2.2.0",
     "lucide-react": "^1.17.0",
     "tailwind-variants": "^3.3.1"
   },
@@ -76,7 +79,7 @@
   },
   "devDependencies": {
     "@krizaka/config": "^0.1.0",
-    "@krizaka/tailwind": "^2.0.0-beta.2",
+    "@krizaka/tailwind": "^2.2.0",
     "@tailwindcss/postcss": "^4.1.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
@@ -89,6 +92,7 @@
     "next": "^16.4.0",
     "publint": "^0.3.25",
     "react": "^19.3.0",
+    "react-docgen-typescript": "^2.4.0",
     "react-dom": "^19.3.0",
     "tailwindcss": "^4.1.0",
     "tsup": "^8.5.1",

@@ -27,7 +27,22 @@ const GLYPHS: Record<string, React.ReactNode> = {
   ),
 };
 
-export function SocialIcon({ network, className = "h-4 w-4" }: { network: string; className?: string }) {
+/** The networks with a glyph of their own; any other value draws the globe of `website`. */
+export type SocialNetwork = "instagram" | "x" | "facebook" | "tiktok" | "youtube" | "telegram" | "website";
+
+/** Props of {@link SocialIcon}. */
+export interface SocialIconProps {
+  /** The network of the link, as stored on the profile (`instagram`, `x`, `tiktok`…); an unknown one draws `website`. */
+  network: SocialNetwork | (string & {});
+  /** Size and colour: the glyph strokes `currentColor`. Default `h-4 w-4`. */
+  className?: string;
+}
+
+/**
+ * A line glyph for a network a creator links from their profile — decorative (`aria-hidden`): the link around it carries
+ * the name (`aria-label="Instagram"`).
+ */
+export function SocialIcon({ network, className = "h-4 w-4" }: SocialIconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
       {GLYPHS[network] ?? GLYPHS.website}

@@ -10,3 +10,4 @@ build/
 *.tsbuildinfo
 .env*.local
 dist/
+/registry/*.json
