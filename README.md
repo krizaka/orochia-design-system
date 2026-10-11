@@ -18,7 +18,7 @@ The Orochia identity on the Krizaka platform — the Obsidian Velvet Noir theme 
 [![Orochia](https://img.shields.io/badge/part%20of-Orochia-7c3aed)](https://www.krizaka.com/en/products/orochia#guarantees)
 [![Docs](https://img.shields.io/badge/docs-krizaka.com-7c3aed)](https://www.krizaka.com/en/products/orochia)
 
-[Documentation](https://www.krizaka.com/en/products/orochia) · [Website](https://www.krizaka.com) · [Krizaka on GitHub](https://github.com/krizaka)
+[Documentation](https://www.krizaka.com/en/docs/orochia/ui) · [Website](https://www.krizaka.com) · [Krizaka on GitHub](https://github.com/krizaka)
 
 </div>
 <!-- /krizaka-header -->
@@ -43,21 +43,22 @@ React 19, Tailwind CSS v4. The app's global stylesheet, in this order:
 | | Contents |
 | :--- | :--- |
 | **Theme** | `theme.css`: the `--kz-*` roles with the Orochia values (obsidian surfaces, velvet accent, magenta `accent-2`, Outfit display face), dark and `html.light` (Luminous Ivory); `--orochia-story-ring` (`bg-story-ring`), `shadow-glow-primary` / `shadow-glow-accent`. |
-| **Composites** | `orochiaButton` (`buttonVariants` + `variant: "sensual"`, the gradient call to action) · `LiveBadge` (on `Badge`) · `SocialIcon`. |
+| **Composites** | `orochiaButton` (`buttonVariants` + `variant: "sensual"`, the gradient call to action) · `StatusBadge` (on `Badge`: `active` · `upcoming` · `success` · `muted` — never "live") · `SocialIcon`. |
 | **Tokens** | `colors`, `gradients`, `gradientStops`… — brand values for illustrations, e-mails and native; `nativeTheme` (the @krizaka/tokens native roles with the Orochia overrides). |
 | **Re-exported from `@krizaka/ui`** | `Button`, `IconButton`, `buttonVariants`, `cn`, the marks and the motion. Import them from `@krizaka/ui` in new code. |
-| **Deprecated** | `themes` → `nativeTheme`. |
+| **Documentation** | `registry/`: every component's documentation, examples and props, and the foundations — rendered by [krizaka.com/docs/orochia/ui](https://www.krizaka.com/en/docs/orochia/ui). |
+| **Deprecated** | `themes` → `nativeTheme` · `LiveBadge` → `StatusBadge` (`tone="live"` → `"active"`; removed in 5.0). |
 | **Removed in 4.0** | `Chip` → `@krizaka/ui/chip` · `Segmented` → `@krizaka/ui/tabs` (`variant="segmented"`, a view) or `Chip.Group` (a filter, a choice) · `Switch` → `@krizaka/ui/switch` · `Slider` → `@krizaka/ui/slider` · `Sheet` → `@krizaka/ui/dialog` · `ConfirmIconButton` → `@krizaka/ui/confirm-button` · `Countdown`, `useCountdown`, `splitDuration` → `@krizaka/ui/countdown` · `buttonClass` → `buttonVariants` · `cx` → `cn` (see the CHANGELOG). |
 | **No longer here** | No palette (`bg-obsidian`, `text-velvet`… are now `bg-surface-0`, `text-accent`), no `light:` / `dark:` variants (from `@krizaka/tailwind`), no primitive of its own. |
 
 ```tsx
 import { Button } from "@krizaka/ui/button";
-import { orochiaButton, LiveBadge } from "@krizaka/orochia-design-system";
+import { orochiaButton, StatusBadge } from "@krizaka/orochia-design-system";
 
 <Button asChild className={orochiaButton({ variant: "sensual", size: "lg", shape: "pill" })}>
   <Link href="/become-creator">{t("home.cta")}</Link>
 </Button>
-<LiveBadge label={t("auction.ending")} tone="upcoming" />
+<StatusBadge label={t("auction.ending")} tone="upcoming" />
 ```
 
 Components take their words as props: the apps translate them and pass them in. The package entry is client-side

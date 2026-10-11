@@ -25,6 +25,15 @@
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@krizaka/orochia-design-system": [
+        "./index.ts"
+      ],
+      "@krizaka/orochia-design-system/classes": [
+        "./classes.ts"
+      ],
+      "@krizaka/orochia-design-system/tokens": [
+        "./tokens/index.ts"
       ]
     },
     "types": [

@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 
 import * as classes from "../classes";
 import * as kit from "./index";
-import { Button, buttonVariants, cn, IconButton, LiveBadge, orochiaButton } from "./index";
+import { Button, buttonVariants, cn, IconButton, LiveBadge, orochiaButton, StatusBadge } from "./index";
 
 describe("Button", () => {
   it("is busy and disabled while loading", () => {
@@ -62,24 +62,35 @@ describe("4.0 — no primitive of its own", () => {
   });
 });
 
-describe("LiveBadge", () => {
-  it("is an accent Badge with a pulsing dot when live", () => {
-    render(<LiveBadge label="Live" />);
-    const badge = screen.getByText("Live");
+describe("StatusBadge", () => {
+  it("is an accent Badge with a pulsing dot when active", () => {
+    render(<StatusBadge label="Open" />);
+    const badge = screen.getByText("Open");
     expect(badge.dataset.tone).toBe("accent");
-    expect(badge.dataset.status).toBe("live");
+    expect(badge.dataset.status).toBe("active");
     expect(badge.querySelector("[data-dot]")).not.toBeNull();
     expect(badge.className).toContain("motion-safe:animate-pulse");
   });
 
-  it("maps its tones onto the Badge roles, pulsing only when live", () => {
+  it("maps its tones onto the Badge roles, pulsing only when active", () => {
     const tones = { upcoming: "accent", success: "success", muted: "neutral" } as const;
     for (const [tone, role] of Object.entries(tones)) {
-      render(<LiveBadge label={tone} tone={tone as keyof typeof tones} className="absolute" />);
+      render(<StatusBadge label={tone} tone={tone as keyof typeof tones} className="absolute" />);
       const badge = screen.getByText(tone);
       expect(badge.dataset.tone).toBe(role);
       expect(badge.className).not.toContain("animate-pulse");
       expect(badge.className).toContain("absolute");
     }
+  });
+});
+
+describe("LiveBadge (deprecated)", () => {
+  it("is StatusBadge, its tone `live` read as `active`", () => {
+    render(<LiveBadge label="Open now" />);
+    const badge = screen.getByText("Open now");
+    expect(badge.dataset.status).toBe("active");
+    expect(badge.className).toContain("motion-safe:animate-pulse");
+    render(<LiveBadge label="Sold" tone="success" />);
+    expect(screen.getByText("Sold").dataset.status).toBe("success");
   });
 });

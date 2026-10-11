@@ -3,5 +3,5 @@ export { Button, type ButtonProps, type ButtonVariants, buttonVariants, IconButt
 export { cn } from "@krizaka/ui/cn";
 
 // Orochia composites.
-export { LiveBadge, type LiveBadgeTone } from "./LiveBadge";
-export { SocialIcon } from "./SocialIcon";
+export { SocialIcon, type SocialIconProps, type SocialNetwork } from "./SocialIcon";
+export { LiveBadge, type LiveBadgeProps, type LiveBadgeTone, StatusBadge, type StatusBadgeProps, type StatusBadgeTone } from "./StatusBadge";

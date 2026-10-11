@@ -3,6 +3,32 @@
 All notable changes to `@krizaka/orochia-design-system`. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions: [Semantic Versioning](https://semver.org/).
 
+## [4.1.0] — 2026-10-11
+
+The kit documents itself: krizaka.com/docs/orochia/ui is generated from its code, like /docs/ui from @krizaka/ui.
+
+### Added
+
+- **`StatusBadge`** (`StatusBadgeProps`, `StatusBadgeTone`): the status of an auction, a challenge or a drop — tones
+  `active` (pulsing), `upcoming`, `success`, `muted`. Orochia has no live streaming and never says "live".
+- **The registry** (`registry/`, published; `./registry/*` and `./registry/examples/*` exports), in the format of
+  @krizaka/ui's: one `registry/<name>.json` per component (its `<name>.meta.ts` — summary, why it exists above Krizaka
+  UI, when to use / not, the @krizaka/ui primitives it is built on, accessibility, related; its named examples; its props
+  from their JSDoc, or the variants of `orochiaButton`), `registry/foundations.json` (the theme resolved in both modes
+  with its WCAG contrasts, the product tokens, the typography, the icons, the product rules quoted from the contracts)
+  and `registry/index.json`. Built by `npm run build:lib`; `scripts/registry.test.ts` fails when an exported component
+  has no documentation or an example.
+- `SocialIconProps`, `SocialNetwork`; JSDoc on every prop.
+
+### Deprecated
+
+- `LiveBadge`, `LiveBadgeProps`, `LiveBadgeTone` → `StatusBadge` (`tone="live"` → `tone="active"`, the default). Same
+  look. Removed in 5.0.
+
+### Changed
+
+- Depends on `@krizaka/ui` / `@krizaka/tokens` `^2.2.0`.
+
 ## [4.0.0] — 2026-10-09
 
 The kit is the Orochia identity only: `theme.css`, the tokens (`nativeTheme`), `orochiaButton`, `LiveBadge`,

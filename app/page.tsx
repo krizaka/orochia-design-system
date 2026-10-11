@@ -11,7 +11,7 @@ import { ThemeToggle } from "@krizaka/ui/theme";
 import { Plus, Trash2, Upload } from "lucide-react";
 import React, { useState, useSyncExternalStore } from "react";
 
-import { Button, cn, IconButton, KrizakaLogo, LiveBadge, orochiaButton, OrochiaLogo, RotatingWord, SocialIcon } from "../index";
+import { Button, cn, IconButton, KrizakaLogo, orochiaButton, OrochiaLogo, RotatingWord, SocialIcon, StatusBadge } from "../index";
 
 /** The roles theme.css overrides, and the product tokens — shown with their live value in the current theme. */
 const IDENTITY = [
@@ -201,10 +201,10 @@ export default function Showcase() {
       <Section title="Time and status">
         <div className="flex flex-wrap items-center gap-6">
           <div className="flex flex-wrap gap-2">
-            <LiveBadge label="Live" />
-            <LiveBadge label="Starts soon" tone="upcoming" />
-            <LiveBadge label="Sold" tone="success" />
-            <LiveBadge label="Ended" tone="muted" />
+            <StatusBadge label="Open" />
+            <StatusBadge label="Starts soon" tone="upcoming" />
+            <StatusBadge label="Sold" tone="success" />
+            <StatusBadge label="Ended" tone="muted" />
           </div>
           <Countdown label="Ends in" target={opened + 2 * 86400_000 + 4 * 3600_000} units={UNITS} size="lg" />
           <Countdown label="Ends in" target={opened + 45_000} units={UNITS} />
@@ -213,7 +213,7 @@ export default function Showcase() {
 
       <Section title="A .theme-dark island (a player) — dark in both themes">
         <div className="theme-dark flex flex-wrap items-center gap-3 rounded-2xl bg-surface-0 p-5 text-fg">
-          <LiveBadge label="Live" />
+          <StatusBadge label="Open" />
           <Button className={orochiaButton({ variant: "sensual", shape: "pill" })}>Tip</Button>
           <Button variant="ghost">Ghost</Button>
           <Countdown label="Ends in" target={opened + 3600_000} units={UNITS} size="sm" />
