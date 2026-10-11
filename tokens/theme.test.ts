@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
-import { themes as kzThemes } from "@krizaka/tokens/native";
+import { brands, themes as kzThemes } from "@krizaka/tokens/native";
 
 import { nativeTheme, themes } from "./index";
 
@@ -66,6 +66,16 @@ describe("nativeTheme", () => {
     expect(nativeTheme.light.textPrimary).toBe(kzThemes.light.textPrimary);
     expect(nativeTheme.dark.accent).not.toBe(kzThemes.dark.accent);
     expect(Object.keys(nativeTheme.dark).sort()).toEqual(Object.keys(kzThemes.dark).sort());
+  });
+
+  it.each(["dark", "light"] as const)("wears the Orochia brand in %s: coloured words violet, never the Krizaka blue", (mode) => {
+    const t = nativeTheme[mode];
+    for (const role of ["accentText", "info", "infoText", "onAccent", "brandGradientFrom", "brandGradientVia", "brandGradientTo"] as const) {
+      expect(t[role], role).toBe(brands.orochia[mode][role]);
+    }
+    expect(t.accentText).not.toBe(kzThemes[mode].accentText);
+    // Coloured words read on every surface.
+    for (const surface of [t.surface0, t.surface1, t.surface2]) expect(contrast(t.accentText, surface)).toBeGreaterThanOrEqual(4.5);
   });
 
   it("keeps the 2.x `themes` as a deprecated view of it", () => {

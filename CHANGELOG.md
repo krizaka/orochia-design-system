@@ -3,6 +3,16 @@
 All notable changes to `@krizaka/orochia-design-system`. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions: [Semantic Versioning](https://semver.org/).
 
+## [4.1.1] — 2026-10-11
+
+### Fixed
+
+- **`nativeTheme` wears the Orochia brand.** It now composes `brands.orochia` of `@krizaka/tokens/native` under the
+  Obsidian Velvet Noir overrides, as the web does with `@krizaka/tokens/brands/orochia.css`: `accentText` (coloured
+  words, links), `info` / `infoText`, `onAccent` and the section gradient are violet instead of the Krizaka blue in the
+  mobile app. A test keeps every brand role equal to `brands.orochia` and `accentText` at AA on the surfaces.
+- Requires `@krizaka/tokens` ≥ 2.3.0.
+
 ## [4.1.0] — 2026-10-11
 
 The kit documents itself: krizaka.com/docs/orochia/ui is generated from its code, like /docs/ui from @krizaka/ui.
