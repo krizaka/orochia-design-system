@@ -37,7 +37,9 @@
 - **Never "live"**: Orochia has no live streaming — no component, example, prop or default says "live" (an auction is
   open, a challenge takes pledges). `StatusBadge` replaced `LiveBadge` for that reason; the registry test refuses the
   word in an example.
-- Every composite has a showcase entry and a test.
+- Every composite has a showcase entry and a test. **No test, not done**: every component, feature or fix ships with
+  its tests (Vitest + Testing Library) in the same pull request; a fix starts with a failing test that reproduces the
+  bug. CI runs them and must be green — a test is never skipped or weakened to get there.
 
 ## 3.1 The documentation of a component is written here
 
@@ -71,4 +73,4 @@ A `v*` tag publishes to npm from CI with provenance.
 
 ## 5. Definition of done
 
-`npm run check` passes (lint + ratchet, type-check, tests — the registry's included —, library build and registry, publint, showcase); the showcase shows the new or changed component in its states, in both themes; its `meta.ts` and examples are written (§3.1).
+`npm run check` passes (lint + ratchet, type-check, tests — the registry's included —, library build and registry, publint, showcase); the showcase shows the new or changed component in its states, in both themes; its `meta.ts` and examples are written (§3.1); the change ships with its tests (§3).
