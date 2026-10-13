@@ -68,7 +68,7 @@
   "dependencies": {
     "@krizaka/tokens": "^2.3.0",
     "@krizaka/ui": "^2.2.0",
-    "lucide-react": "^1.17.0",
+    "lucide-react": "^1.54.0",
     "tailwind-variants": "^3.3.1"
   },
   "peerDependencies": {
@@ -88,7 +88,7 @@
     "@types/react-dom": "^19.2.0",
     "eslint": "^9.39.0",
     "eslint-config-next": "^16.4.0",
-    "happy-dom": "^20.0.0",
+    "happy-dom": "^20.14.6",
     "next": "^16.4.0",
     "publint": "^0.3.25",
     "react": "^19.3.0",
