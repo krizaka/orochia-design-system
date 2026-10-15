@@ -15,8 +15,8 @@ The Orochia identity on the Krizaka platform — the Obsidian Velvet Noir theme 
 [![npm](https://img.shields.io/npm/v/@krizaka/orochia-design-system?color=7c3aed&label=npm)](https://www.npmjs.com/package/@krizaka/orochia-design-system)
 [![CI](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Orochia](https://img.shields.io/badge/part%20of-Orochia-7c3aed)](https://www.krizaka.com/en/products/orochia#guarantees)
-[![Docs](https://img.shields.io/badge/docs-krizaka.com-7c3aed)](https://www.krizaka.com/en/products/orochia)
+[![Orochia](https://img.shields.io/badge/part%20of-Orochia-7c3aed)](https://dev.orochia.com)
+[![Docs](https://img.shields.io/badge/docs-krizaka.com-7c3aed)](https://dev.orochia.com)
 
 [Documentation](https://www.krizaka.com/en/docs/orochia/ui) · [Website](https://www.krizaka.com) · [Krizaka on GitHub](https://github.com/krizaka)
 
@@ -89,3 +89,7 @@ a caret range and never keep a copy of a component.
 ---
 
 Apache-2.0 · Part of [Krizaka](https://www.krizaka.com) — open source, closed to compromise.
+
+---
+
+<sub>A Krizaka product · [krizaka.com](https://www.krizaka.com) · Apache-2.0</sub>
