@@ -1,5 +1,6 @@
 "use client";
 
+import { PlusIcon, TrashIcon, UploadIcon } from "@krizaka/icons";
 import { Chip } from "@krizaka/ui/chip";
 import { ConfirmButton } from "@krizaka/ui/confirm-button";
 import { Countdown } from "@krizaka/ui/countdown";
@@ -8,7 +9,6 @@ import { Slider } from "@krizaka/ui/slider";
 import { Switch } from "@krizaka/ui/switch";
 import { Tabs } from "@krizaka/ui/tabs";
 import { ThemeToggle } from "@krizaka/ui/theme";
-import { Plus, Trash2, Upload } from "lucide-react";
 import React, { useState, useSyncExternalStore } from "react";
 
 import { Button, cn, IconButton, KrizakaLogo, orochiaButton, OrochiaLogo, RotatingWord, SocialIcon, StatusBadge } from "../index";
@@ -94,7 +94,7 @@ export default function Showcase() {
       <Section title="Buttons — @krizaka/ui, plus orochiaButton">
         <div className="flex flex-wrap items-center gap-3">
           <Button className={orochiaButton({ variant: "sensual", shape: "pill" })}>
-            <Upload className="h-4 w-4" />
+            <UploadIcon size={16} />
             Sensual
           </Button>
           <Button variant="primary">Primary</Button>
@@ -118,10 +118,10 @@ export default function Showcase() {
         </div>
         <div className="mt-4 flex items-center gap-2">
           <IconButton label="Add" variant="ghost" shape="pill">
-            <Plus className="h-4 w-4" />
+            <PlusIcon size={16} />
           </IconButton>
           <ConfirmButton size="sm" label="Delete the draft" confirmLabel="Delete?" onConfirm={() => undefined}>
-            <Trash2 className="h-3.5 w-3.5" />
+            <TrashIcon size={14} />
           </ConfirmButton>
           <span className="text-xs text-fg-secondary">Tap the bin twice: destructive actions never use window.confirm.</span>
         </div>
