@@ -3,6 +3,12 @@
 All notable changes to `@krizaka/orochia-design-system`. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versions: [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **ORO-UI3**: built on `@krizaka/ui`, `tokens`, `tailwind` 3.26 (from 2.x). Lint, types, 41 tests, the library build and publint pass unchanged.
+
 ## [4.1.1] — 2026-10-11
 
 ### Fixed
