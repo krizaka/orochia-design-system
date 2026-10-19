@@ -5,7 +5,7 @@ const shared = {
   dts: true,
   tsconfig: "tsconfig.lib.json",
   sourcemap: true,
-  external: ["react", "react-dom", "react/jsx-runtime", /^@krizaka\//, "lucide-react", "tailwind-variants"],
+  external: ["react", "react-dom", "react/jsx-runtime", /^@krizaka\//, "tailwind-variants"],
 };
 
 /**

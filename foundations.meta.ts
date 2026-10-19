@@ -38,7 +38,7 @@ export const foundations = {
   ],
   icons: [
     { name: "OrochiaLogo", from: "@krizaka/ui", use: "The brand mark — the serpent and the flame, animated; never a placeholder icon. It stops under reduced motion." },
-    { name: "@krizaka/icons", from: "@krizaka/icons", use: "Every interface icon (`<Name>Icon`, the Krizaka signature); `lucide-react` is being retired screen by screen." },
+    { name: "@krizaka/icons", from: "@krizaka/icons", use: "Every interface icon (`<Name>Icon`, the Krizaka signature); `lucide-react` is no longer a dependency of this kit." },
     { name: "SocialIcon", from: "@krizaka/orochia-design-system", use: "The networks a creator links from their profile." },
   ],
   rules: [
