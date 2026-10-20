@@ -14,6 +14,7 @@ The Orochia identity on the Krizaka platform — the Obsidian Velvet Noir theme 
 
 [![npm](https://img.shields.io/npm/v/@krizaka/orochia-design-system?color=7c3aed&label=npm)](https://www.npmjs.com/package/@krizaka/orochia-design-system)
 [![CI](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/krizaka/orochia-design-system/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/krizaka/orochia-design-system/badge)](https://scorecard.dev/viewer/?uri=github.com/krizaka/orochia-design-system)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Orochia](https://img.shields.io/badge/part%20of-Orochia-7c3aed)](https://dev.orochia.com)
 [![Docs](https://img.shields.io/badge/docs-krizaka.com-7c3aed)](https://dev.orochia.com)
