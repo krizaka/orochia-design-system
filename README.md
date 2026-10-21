@@ -84,7 +84,7 @@ npm run check      # lint (+ krizaka-ratchet), type-check, tests, library build,
 ## Release
 
 A `v*` tag publishes to npm from CI with provenance. Semantic versioning; the apps
-([orochia](https://github.com/krizaka/orochia), [orochia-admin](https://github.com/krizaka/orochia-admin), [orochia-mobile](https://github.com/krizaka/orochia-mobile)) depend on
+([orochia](https://github.com/krizaka/orochia), [orochia-mobile](https://github.com/krizaka/orochia-mobile)) depend on
 a caret range and never keep a copy of a component.
 
 ---
